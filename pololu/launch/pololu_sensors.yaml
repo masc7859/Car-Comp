@@ -1,0 +1,8 @@
+# Pololu based sensors
+
+ir:
+  pololu_id: 1
+  sensor_id: 9
+  voltage: 0
+
+
