@@ -1,0 +1,33 @@
+<!-- Madgewick Filter launch file -->
+<launch>
+  #### Nodelet manager ######################################################
+
+  <node pkg="nodelet" type="nodelet" name="imu_manager" 
+    args="manager" output="screen" />
+
+  <!--
+  <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet"
+    args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
+    output="screen">
+
+    <param name="use_mag" value="false"/>
+
+  </node>
+  -->
+
+  #### Complementary filter
+
+  <node pkg="imu_filter_madgwick" type="imu_filter_node"
+      name="imu_filter_gain_node" output="screen">
+    <param name="do_bias_estimation" value="true"/>
+    <param name="do_adaptive_gain" value="true"/>
+    <param name="use_mag" value="true"/>
+    <param name="gain_acc" value="0.01"/>
+    <param name="gain_mag" value="0.01"/>
+ 
+  
+  </node>
+  
+
+
+</launch>
