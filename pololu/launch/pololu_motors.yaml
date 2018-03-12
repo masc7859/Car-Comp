@@ -2,7 +2,7 @@
 
 steering:
   pololu_id: 1
-  motor_id: 10
+  motor_id: 17
   init: 1900
   min: 1000
   max: 2000
@@ -15,7 +15,7 @@ steering:
 
 drive:
   pololu_id: 1
-  motor_id: 11
+  motor_id: 14
   init: 1500
   min: 1000
   max: 2000

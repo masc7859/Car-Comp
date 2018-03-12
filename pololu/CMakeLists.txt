@@ -131,7 +131,8 @@ add_executable(ros_pololu_servo_node src/pololu_controller_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-#add_dependencies(ros_pololu_servo_node)
+add_dependencies(ros_pololu_servo_node ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(ros_pololu_servo
    ${catkin_LIBRARIES}
    yaml-cpp

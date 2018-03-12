@@ -53,7 +53,7 @@ class PololuController
 {
     private:
         ros::Publisher motor_state_list_pub;
-	      ros::Publisher sensor_state_list_pub;
+	ros::Publisher sensor_state_list_pub;
         ros::Subscriber motor_cmd_sub;
         ros::ServiceServer motor_range_srv; // = n.advertiseService("add_two_ints", add);
         ros::NodeHandle n;
@@ -68,7 +68,7 @@ class PololuController
         map<string, Motor> motors;
         Motor default_motor();
 
-	      ros_pololu_servo::SensorStateList sensor_state_list;
+	ros_pololu_servo::SensorStateList sensor_state_list;
         map<string, Sensor> sensors;
 
     public:
@@ -78,6 +78,6 @@ class PololuController
         bool initialize();
         double get_rate_hz();
         void publish_motor_state();
-	      void publish_sensor_readings();
+	void publish_sensor_readings();
         void motor_command_callback(const ros_pololu_servo::MotorCommand::ConstPtr& msg);
 };
