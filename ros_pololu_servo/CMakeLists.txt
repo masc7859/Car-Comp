@@ -94,7 +94,7 @@ add_action_files(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES ros_pololu_servo
   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime actionlib_msgs
 #  DEPENDS system_lib
@@ -131,7 +131,8 @@ add_executable(ros_pololu_servo_node src/pololu_controller_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(ros_pololu_servo_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(ros_pololu_servo_node ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(ros_pololu_servo ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(ros_pololu_servo
    ${catkin_LIBRARIES}
