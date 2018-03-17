@@ -57,6 +57,8 @@ add_message_files(
    DIRECTORY
    msg
    FILES
+   SensorState.msg
+   SensorStateList.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -111,7 +113,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES oto_control
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime actionlib_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime actionlib_msgs ros_pololu_servo
   DEPENDS system_lib
 )
 
@@ -123,7 +125,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  include
+  include  
 )
 
 link_directories( /usr/local/lib )
@@ -159,6 +161,7 @@ add_executable(oto_control_node src/oto_controller_node.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(oto_control_node ros_pololu_servo_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(oto_control_node
