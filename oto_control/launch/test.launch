@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="oto_control" type="oto_control_node" name="oto_control_node" output="screen">
+  </node>
+</launch>

@@ -57,8 +57,12 @@ add_message_files(
    DIRECTORY
    msg
    FILES
+   MotorCommand.msg
    SensorState.msg
    SensorStateList.msg
+   MotorState.msg
+   MotorStateList.msg
+   MotorCalibration.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -125,7 +129,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  include  
+  include
 )
 
 link_directories( /usr/local/lib )
@@ -162,6 +166,7 @@ add_executable(oto_control_node src/oto_controller_node.cpp)
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(oto_control oto_control_generate_messages_cpp)
+add_dependencies(oto_control ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(oto_control_node
