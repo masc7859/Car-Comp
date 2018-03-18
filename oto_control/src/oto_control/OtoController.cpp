@@ -39,11 +39,31 @@ void OtoController::publish_motor_command() {
     motor_pub.publish(OtoController::motor_command);
 }
 
+void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
+    OtoController::steering_effort.data = msg->data;
+}
+
+void OtoController::publish_steering_setpoint(double test) {
+    OtoController::plant_test.data = test;
+    steering_plant_pub.publish(OtoController::plant_test);
+}
+
+void OtoController::publish_steering_plant(double test) {
+    OtoController::plant_test.data = test;
+    steering_setpoint_pub.publish(OtoController::plant_test);
+}
+
 bool OtoController::initialize()
 {
+    //for pololu
     sensor_sub = n.subscribe("pololu/sensor_states", 1, &OtoController::sensor_state_callback, this);
     motor_sub = n.subscribe("pololu/motor_states", 1, &OtoController::motor_state_callback, this);
     motor_pub = n.advertise<oto_control::MotorCommand>("pololu/command", 1);
+
+    //pid
+    steering_plant_pub = n.advertise<std_msgs::Float64>("steering_plant", 1);
+    steering_setpoint_pub = n.advertise<std_msgs::Float64>("steering_setpoint", 1);
+    steering_effort_sub = n.subscribe("steering_effort", 1, &OtoController::steering_effort_callback, this);
 
     //this block is temporary
     OtoController::desired_distance = 150;

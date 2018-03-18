@@ -31,6 +31,9 @@ class OtoController {
         ros::Subscriber sensor_sub;
         ros::Subscriber motor_sub;
         ros::Publisher motor_pub;
+        ros::Publisher steering_plant_pub;
+        ros::Publisher steering_setpoint_pub;
+        ros::Subscriber steering_effort_sub;
         //ros::Rate rate;
 
         int desired_distance;
@@ -41,6 +44,8 @@ class OtoController {
         motor_data latest_motor_state[2];
         oto_control::MotorCommand motor_command;
         std_msgs::Float64 plant_state;
+        std_msgs::Float64 steering_effort;
+        std_msgs::Float64 plant_test;
 
         OtoController();
         ~OtoController();
@@ -49,4 +54,7 @@ class OtoController {
         void sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg);
         void motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg);
         void publish_motor_command();
+        void steering_effort_callback(const std_msgs::Float64::ConstPtr& msg);
+        void publish_steering_setpoint(double test);
+        void publish_steering_plant(double test);
 };

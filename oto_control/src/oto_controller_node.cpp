@@ -14,7 +14,7 @@ int main(int argc,char**argv)
 
     ros::Rate rate(controller.get_rate_hz());
 
-	while(ros::ok()) {
+	  while(ros::ok()) {
 	    ros::spinOnce();
       rate.sleep();
 	}
