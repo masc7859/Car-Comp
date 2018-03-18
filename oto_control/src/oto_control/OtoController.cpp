@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <ros/ros.h>
+#include <std_msgs/Float64.h>
 
 using namespace std;
 
@@ -30,10 +31,12 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
     OtoController::latest_motor_state[0].radians = msg->motor_states[0].radians;
     OtoController::latest_motor_state[0].degrees = msg->motor_states[0].degrees;
     ROS_INFO("%d",OtoController::latest_motor_state[0].pulse);
+
+    OtoController::plant_state.data = OtoController::latest_motor_state[0].degrees;
 }
 
 void OtoController::publish_motor_command() {
-    motor_pub.publish(OtoController::motor_state_list);
+    motor_pub.publish(OtoController::motor_command);
 }
 
 bool OtoController::initialize()
@@ -42,7 +45,12 @@ bool OtoController::initialize()
     motor_sub = n.subscribe("pololu/motor_states", 1, &OtoController::motor_state_callback, this);
     motor_pub = n.advertise<oto_control::MotorCommand>("pololu/command", 1);
 
+    //this block is temporary
     OtoController::desired_distance = 150;
+    OtoController::motor_command.joint_name = "steering";
+    OtoController::motor_command.position = 1501;
+    OtoController::motor_command.speed = 0;
+    OtoController::motor_command.acceleration = 0;
 
     bool success = true;
     ROS_INFO("Initialized OtoController");

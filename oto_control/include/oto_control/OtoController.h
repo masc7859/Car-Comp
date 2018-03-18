@@ -9,19 +9,20 @@
 #include <map>
 #include <angles/angles.h>
 #include <string>
+#include <std_msgs/Float64.h>
 
 using namespace std;
 
 struct ir_data {
   string name;
-  float voltage;
+  double voltage;
 };
 
 struct motor_data {
   string name;
   int pulse;
-  float radians;
-  float degrees;
+  double radians;
+  double degrees;
 };
 
 class OtoController {
@@ -38,7 +39,8 @@ class OtoController {
     public:
         ir_data latest_ir_data[2];
         motor_data latest_motor_state[2];
-        oto_control::MotorStateList motor_state_list;
+        oto_control::MotorCommand motor_command;
+        std_msgs::Float64 plant_state;
 
         OtoController();
         ~OtoController();
