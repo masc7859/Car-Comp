@@ -15,9 +15,12 @@ int main(int argc,char**argv)
     ros::Rate rate(controller.get_rate_hz());
 
 	  while(ros::ok()) {
+      controller.decide_yaw();
+      controller.decide_vel();
+
 	    ros::spinOnce();
       rate.sleep();
-	}
+	  }
 
 	controller.~OtoController();
 

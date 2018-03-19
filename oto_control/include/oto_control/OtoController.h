@@ -25,27 +25,49 @@ struct motor_data {
   double degrees;
 };
 
+struct configuration {
+  double cruise_setpoint;
+  double min_turn_distance;
+};
+
 class OtoController {
     private:
         ros::NodeHandle n;
         ros::Subscriber sensor_sub;
         ros::Subscriber motor_sub;
         ros::Publisher motor_pub;
+
         ros::Publisher steering_plant_pub;
         ros::Publisher steering_setpoint_pub;
         ros::Subscriber steering_effort_sub;
+
+        ros::Publisher motor_plant_pub;
+        ros::Publisher motor_setpoint_pub;
+        ros::Subscriber motor_effort_sub;
         //ros::Rate rate;
 
-        int desired_distance;
         int rate_hz;
 
     public:
-        ir_data latest_ir_data[2];
-        motor_data latest_motor_state[2];
+        ir_data latest_ir_data[2]; //first front, second rear
+        motor_data latest_motor_state[2]; //first motor, second steering
+        configuration cfg;
+        double steering_plant;
+        double distance_plant_f;
+        double distance_plant_r;
+        double motor_plant;
+        bool turning;
+        bool turn_flag;
+        double turn_flag_confidence;
+
         oto_control::MotorCommand motor_command;
-        std_msgs::Float64 plant_state;
-        std_msgs::Float64 steering_effort;
-        std_msgs::Float64 plant_test;
+
+        std_msgs::Float64 steering_plant_msg;
+        std_msgs::Float64 steering_effort_msg;
+        std_msgs::Float64 steering_setpoint_msg;
+        std_msgs::Float64 motor_plant_msg;
+        std_msgs::Float64 motor_effort_msg;
+        std_msgs::Float64 motor_setpoint_msg;
 
         OtoController();
         ~OtoController();
@@ -53,8 +75,14 @@ class OtoController {
         bool initialize();
         void sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg);
         void motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg);
-        void publish_motor_command();
+        void publish_motor_command(oto_control::MotorCommand motor_command);
         void steering_effort_callback(const std_msgs::Float64::ConstPtr& msg);
-        void publish_steering_setpoint(double test);
-        void publish_steering_plant(double test);
+        void motor_effort_callback(const std_msgs::Float64::ConstPtr& msg);
+        void publish_steering_setpoint();
+        void publish_steering_plant();
+        void publish_motor_setpoint();
+        void publish_motor_plant();
+        void sensor_interpret();
+        void decide_yaw();
+        void decide_vel();
 };
