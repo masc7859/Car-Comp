@@ -69,6 +69,9 @@ class OtoController {
             public:
               double init_yaw;
               double final_yaw;
+              double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
+              bool turn_flag;
+              double turn_flag_confidence;
               OtoController* parent_controller;
 
               CruiseState();
@@ -76,6 +79,8 @@ class OtoController {
               bool initialize(OtoController* parent_controller);
               void decide_yaw();
               void decide_vel();
+              void sensor_interpret();
+              void cruise();
         };
 
         class TurnState {
@@ -83,11 +88,14 @@ class OtoController {
             public:
               double init_yaw;
               double final_yaw;
+              double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
               OtoController* parent_controller;
 
               TurnState();
               ~TurnState();
               bool initialize(OtoController* controller);
+              void sensor_interpret();
+              void turn();
         };
 
         CruiseState Cruise;
@@ -97,9 +105,6 @@ class OtoController {
         configuration cfg;
 
         int state;
-        double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
-        bool turn_flag;
-        double turn_flag_confidence;
         double roll,pitch,yaw; //in rad
         double x_accel, y_accel; //in m/s
         double vel_est;
@@ -124,7 +129,6 @@ class OtoController {
         void publish_steering_plant();
         void publish_motor_setpoint();
         void publish_motor_plant();
-        void sensor_interpret();
         void decide_yaw();
         void decide_vel();
 };

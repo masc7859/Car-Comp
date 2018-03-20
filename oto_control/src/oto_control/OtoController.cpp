@@ -9,13 +9,11 @@
 
 using namespace std;
 
-OtoController::OtoController()
-{
+OtoController::OtoController() {
     int x = 0;
 }
 
-OtoController::~OtoController()
-{
+OtoController::~OtoController() {
     ROS_INFO("Shutting down...");
 }
 
@@ -98,8 +96,7 @@ void OtoController::publish_motor_setpoint() {
     //motor_plant_pub.publish(OtoController::motor_setpoint_msg);
 }
 
-bool OtoController::initialize()
-{
+bool OtoController::initialize() {
     //pololu
     sensor_sub = n.subscribe("pololu/sensor_states", 1, &OtoController::sensor_state_callback, this);
     motor_sub = n.subscribe("pololu/motor_states", 1, &OtoController::motor_state_callback, this);
@@ -133,7 +130,6 @@ bool OtoController::initialize()
     //setup configuration
     cfg.cruise_setpoint = 150.0;
     cfg.min_turn_distance = 250.0;
-    turn_flag = false;
 
     state = CRUISE;
     t_prev = ros::Time::now().toSec();
@@ -144,35 +140,7 @@ bool OtoController::initialize()
     return success;
 }
 
-void OtoController::sensor_interpret(){
-    double distance_plant_comb;
-
-    //distance to wall from each sensor
-    distance_plant_f = pow(latest_ir_data[0].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
-    distance_plant_r = pow(latest_ir_data[1].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
-
-    //we want plant_f - plant_r = 0, thats our cruise condition
-
-    if(distance_plant_f >= cfg.min_turn_distance){
-        if(turn_flag){
-            turn_flag_confidence = max(turn_flag_confidence,
-                (distance_plant_f - cfg.min_turn_distance) / 400);
-        }
-        else{
-            turn_flag = true;
-            turn_flag_confidence = (distance_plant_f - cfg.min_turn_distance) / 400;
-        }
-    }
-
-    if(distance_plant_r >= cfg.min_turn_distance){
-        //cant turn immediately, need some way of telling for sure
-        state = TURN;
-    }
-
-}
-
-double OtoController::get_rate_hz()
-{
+double OtoController::get_rate_hz() {
     //get this from params
     double rate_hz = 10;
     return rate_hz;

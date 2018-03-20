@@ -20,6 +20,10 @@ bool OtoController::TurnState::initialize(OtoController* controller){
     final_yaw = parent_controller->yaw - (M_PI / 2);
 }
 
+void OtoController::TurnState::sensor_interpret(){
+
+}
+
 OtoController::TurnState::~TurnState()
 {
     ROS_INFO("Leaving Turn State");
