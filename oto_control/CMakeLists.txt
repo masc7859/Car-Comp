@@ -137,6 +137,8 @@ link_directories( /usr/local/lib )
 ## Declare a C++ library
 add_library(oto_control
    src/oto_control/OtoController.cpp
+   src/oto_control/OtoCruise.cpp
+   src/oto_control/OtoTurn.cpp
  )
 
 ## Add cmake target dependencies of the library

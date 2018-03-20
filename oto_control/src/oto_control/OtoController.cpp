@@ -49,8 +49,6 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
 
 void OtoController::imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg) {
     double q0,q1,q2,q3;
-    double roll,pitch,yaw = 0.0;
-    double x_accel, y_accel = 0.0;
 
     //geometry_msgs::Vector3Stamped ;
 
@@ -58,13 +56,13 @@ void OtoController::imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg) {
     q1 = imu_msg->orientation.x;
     q2 = imu_msg->orientation.y;
     q3 = imu_msg->orientation.z;
-    x_accel = imu_msg->linear_acceleration.x;
-    y_accel = imu_msg->linear_acceleration.y;
+    OtoController::x_accel = imu_msg->linear_acceleration.x;
+    OtoController::y_accel = imu_msg->linear_acceleration.y;
 
     //tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(rpy.vector.x, rpy.vector.y, rpy.vector.z);
-    tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(roll, pitch, yaw);
-    ROS_INFO("yaw: %lf",yaw);
-    ROS_INFO("x accel: %lf",x_accel);
+    tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(OtoController::roll, OtoController::pitch, OtoController::yaw);
+    ROS_INFO("yaw: %lf", OtoController::yaw);
+    ROS_INFO("x accel: %lf", OtoController::x_accel);
 
 }
 
@@ -128,7 +126,7 @@ bool OtoController::initialize()
     OtoController::cfg.cruise_setpoint = 150.0;
     OtoController::cfg.min_turn_distance = 250.0;
     OtoController::turn_flag = false;
-    OtoController::turning = false;
+    OtoController::turn_state = false;
 
     bool success = true;
     ROS_INFO("Initialized OtoController");
@@ -156,21 +154,9 @@ void OtoController::sensor_interpret(){
 
     if(OtoController::distance_plant_r >= OtoController::cfg.min_turn_distance){
         //cant turn immediately, need some way of telling for sure
-        OtoController::turning = true;
+        OtoController::turn_state = true;
     }
 
-}
-
-void OtoController::decide_yaw(){
-    //set steering_setpoint based on ?
-    OtoController::steering_setpoint_msg.data = 1500;
-    this->publish_steering_setpoint();
-}
-
-void OtoController::decide_vel(){
-    //set motor_setpoint based on confidence
-    OtoController::motor_setpoint_msg.data = 1500;
-    this->publish_motor_setpoint();
 }
 
 double OtoController::get_rate_hz()

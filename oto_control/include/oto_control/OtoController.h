@@ -17,7 +17,10 @@ using namespace std;
 
 #define MAX_STEERING_ANGLE    45  //left
 #define MIN_STEERING_ANGLE    -45 //right
-#define MAX_SPEED_PW    1
+#define MAX_SPEED_PW_F   -0.437
+#define MAX_SPEED_PW_R    0.437
+
+double deg_to_rad(double angle);
 
 struct ir_data {
   string name;
@@ -37,7 +40,7 @@ struct configuration {
 };
 
 class OtoController {
-    typedef sensor_msgs::Imu              ImuMsg;
+    typedef sensor_msgs::Imu    ImuMsg;
 
     private:
         ros::NodeHandle n;
@@ -59,22 +62,44 @@ class OtoController {
         int rate_hz;
 
     public:
+        class CruiseState {
+            private:
+            public:
+              OtoController* parent_controller;
+
+              CruiseState();
+              ~CruiseState();
+              bool initialize(OtoController* parent_controller);
+              void decide_yaw();
+              void decide_vel();
+        };
+
+        class TurnState {
+            private:
+            public:
+              double init_yaw;
+              double final_yaw;
+              OtoController* parent_controller;
+
+              TurnState();
+              ~TurnState();
+              bool initialize(OtoController* controller);
+        };
+
         ir_data latest_ir_data[2]; //first front, second rear
         motor_data latest_motor_state[2]; //first motor, second steering
         configuration cfg;
         double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
-        bool turning;
         bool turn_flag;
+        bool turn_state;
         double turn_flag_confidence;
+        double roll,pitch,yaw; //in rad
+        double x_accel, y_accel; //in m/s
 
         oto_control::MotorCommand motor_command;
 
-        std_msgs::Float64 steering_plant_msg;
-        std_msgs::Float64 steering_effort_msg;
-        std_msgs::Float64 steering_setpoint_msg;
-        std_msgs::Float64 motor_plant_msg;
-        std_msgs::Float64 motor_effort_msg;
-        std_msgs::Float64 motor_setpoint_msg;
+        std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
+                          motor_plant_msg, motor_effort_msg, motor_setpoint_msg;
 
         OtoController();
         ~OtoController();
@@ -94,8 +119,3 @@ class OtoController {
         void decide_yaw();
         void decide_vel();
 };
-
-double deg_to_rad(double angle){
-    double angle_rad = angle * M_PI / 180;
-    return angle_rad;
-}
