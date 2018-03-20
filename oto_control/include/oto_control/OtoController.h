@@ -67,6 +67,8 @@ class OtoController {
         class CruiseState {
             private:
             public:
+              double init_yaw;
+              double final_yaw;
               OtoController* parent_controller;
 
               CruiseState();
@@ -100,6 +102,8 @@ class OtoController {
         double turn_flag_confidence;
         double roll,pitch,yaw; //in rad
         double x_accel, y_accel; //in m/s
+        double vel_est;
+        float t_prev;
 
         oto_control::MotorCommand motor_command;
 
@@ -115,7 +119,7 @@ class OtoController {
         void publish_motor_command(oto_control::MotorCommand motor_command);
         void steering_effort_callback(const std_msgs::Float64::ConstPtr& msg);
         void motor_effort_callback(const std_msgs::Float64::ConstPtr& msg);
-        void imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg);
+        void imu_callback(const ImuMsg::ConstPtr& imu_msg);
         void publish_steering_setpoint();
         void publish_steering_plant();
         void publish_motor_setpoint();

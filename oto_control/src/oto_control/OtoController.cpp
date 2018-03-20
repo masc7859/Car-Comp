@@ -20,13 +20,11 @@ OtoController::~OtoController()
 }
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
-    OtoController::latest_ir_data[0].name = msg->sensor_states[0].name;
-    OtoController::latest_ir_data[0].voltage = msg->sensor_states[0].voltage;
-    OtoController::latest_ir_data[1].name = msg->sensor_states[1].name;
-    OtoController::latest_ir_data[1].voltage = msg->sensor_states[1].voltage;
-    ROS_INFO("%f",OtoController::latest_ir_data[1].voltage);
-
-    this->sensor_interpret();
+    latest_ir_data[0].name = msg->sensor_states[0].name;
+    latest_ir_data[0].voltage = msg->sensor_states[0].voltage;
+    latest_ir_data[1].name = msg->sensor_states[1].name;
+    latest_ir_data[1].voltage = msg->sensor_states[1].voltage;
+    ROS_INFO("%f", latest_ir_data[1].voltage);
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
@@ -44,11 +42,12 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
 
     motor_plant_msg.data = latest_motor_state[0].pulse;
     steering_plant_msg.data = latest_motor_state[1].degrees;
-
 }
 
-void OtoController::imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg) {
+void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
     double q0,q1,q2,q3;
+    double t;
+    double t_interval;
 
     //geometry_msgs::Vector3Stamped ;
 
@@ -64,6 +63,12 @@ void OtoController::imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg) {
     ROS_INFO("yaw: %lf", yaw);
     ROS_INFO("x accel: %lf", x_accel);
 
+    t = ros::Time::now().toSec();
+    t_interval = t - t_prev;
+    t_prev = t;
+
+    vel_est = vel_est + x_accel * t_interval;
+
 }
 
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
@@ -77,15 +82,11 @@ void OtoController::publish_motor_command(oto_control::MotorCommand motor_comman
 }
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
-    oto_control::MotorCommand motor_command;
     steering_effort_msg.data = msg->data;
-    this->publish_motor_command(motor_command);
 }
 
 void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
-    oto_control::MotorCommand motor_command;
     motor_effort_msg.data = msg->data;
-    this->publish_motor_command(motor_command);
 }
 
 void OtoController::publish_steering_setpoint() {
@@ -114,23 +115,32 @@ bool OtoController::initialize()
     steering_effort_sub = n.subscribe("motor_effort", 1, &OtoController::motor_effort_callback, this);
 
     //imu
-    imu_orientation_sub = n.subscribe("imu/data", 1, &OtoController::imu_orientation_callback, this);
+    imu_orientation_sub = n.subscribe("imu/data", 1, &OtoController::imu_callback, this);
 
-    //this block is temporary
+    //set speed(aceleration) and acceleration(jerk)
     motor_command.joint_name = "steering";
-    motor_command.position = 1501;
-    motor_command.speed = 0;
+    motor_command.position = 1500;
+    motor_command.speed = 2;
     motor_command.acceleration = 0;
+    this->publish_motor_command(motor_command);
+
+    motor_command.joint_name = "drive";
+    motor_command.position = 1500;
+    motor_command.speed = 5;
+    motor_command.acceleration = 0;
+    this->publish_motor_command(motor_command);
 
     //setup configuration
     cfg.cruise_setpoint = 150.0;
     cfg.min_turn_distance = 250.0;
     turn_flag = false;
 
-    bool success = true;
     state = CRUISE;
-    ROS_INFO("Initialized OtoController");
+    t_prev = ros::Time::now().toSec();
 
+
+    bool success = true;
+    ROS_INFO("Initialized OtoController");
     return success;
 }
 
@@ -140,6 +150,8 @@ void OtoController::sensor_interpret(){
     //distance to wall from each sensor
     distance_plant_f = pow(latest_ir_data[0].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
     distance_plant_r = pow(latest_ir_data[1].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+
+    //we want plant_f - plant_r = 0, thats our cruise condition
 
     if(distance_plant_f >= cfg.min_turn_distance){
         if(turn_flag){
