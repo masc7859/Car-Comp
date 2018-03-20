@@ -15,14 +15,14 @@ OtoController::TurnState::TurnState()
 }
 
 bool OtoController::TurnState::initialize(OtoController* controller){
-    TurnState::parent_controller = controller;
-    TurnState::init_yaw = parent_controller->yaw;
-    TurnState::final_yaw = parent_controller->yaw - (M_PI / 2);
+    parent_controller = controller;
+    init_yaw = parent_controller->yaw;
+    final_yaw = parent_controller->yaw - (M_PI / 2);
 }
 
 OtoController::TurnState::~TurnState()
 {
-    ROS_INFO("Leaing Turn State");
+    ROS_INFO("Leaving Turn State");
 }
 
 double deg_to_rad(double angle){

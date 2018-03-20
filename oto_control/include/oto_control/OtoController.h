@@ -19,6 +19,8 @@ using namespace std;
 #define MIN_STEERING_ANGLE    -45 //right
 #define MAX_SPEED_PW_F   -0.437
 #define MAX_SPEED_PW_R    0.437
+#define CRUISE    0
+#define TURN    1
 
 double deg_to_rad(double angle);
 
@@ -86,12 +88,15 @@ class OtoController {
               bool initialize(OtoController* controller);
         };
 
+        CruiseState Cruise;
+        TurnState Turn;
         ir_data latest_ir_data[2]; //first front, second rear
         motor_data latest_motor_state[2]; //first motor, second steering
         configuration cfg;
+
+        int state;
         double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
         bool turn_flag;
-        bool turn_state;
         double turn_flag_confidence;
         double roll,pitch,yaw; //in rad
         double x_accel, y_accel; //in m/s

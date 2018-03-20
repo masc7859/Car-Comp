@@ -30,20 +30,20 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
-    OtoController::latest_motor_state[0].name = msg->motor_states[0].name;
-    OtoController::latest_motor_state[0].pulse = msg->motor_states[0].pulse;
-    OtoController::latest_motor_state[0].radians = msg->motor_states[0].radians;
-    OtoController::latest_motor_state[0].degrees = msg->motor_states[0].degrees;
-    ROS_INFO("motor_state 1:%d",OtoController::latest_motor_state[0].pulse);
+    latest_motor_state[0].name = msg->motor_states[0].name;
+    latest_motor_state[0].pulse = msg->motor_states[0].pulse;
+    latest_motor_state[0].radians = msg->motor_states[0].radians;
+    latest_motor_state[0].degrees = msg->motor_states[0].degrees;
+    ROS_INFO("motor_state 1:%d",latest_motor_state[0].pulse);
 
-    OtoController::latest_motor_state[1].name = msg->motor_states[1].name;
-    OtoController::latest_motor_state[1].pulse = msg->motor_states[1].pulse;
-    OtoController::latest_motor_state[1].radians = msg->motor_states[1].radians;
-    OtoController::latest_motor_state[1].degrees = msg->motor_states[1].degrees;
-    ROS_INFO("steering_state 2:%lf",OtoController::latest_motor_state[1].degrees);
+    latest_motor_state[1].name = msg->motor_states[1].name;
+    latest_motor_state[1].pulse = msg->motor_states[1].pulse;
+    latest_motor_state[1].radians = msg->motor_states[1].radians;
+    latest_motor_state[1].degrees = msg->motor_states[1].degrees;
+    ROS_INFO("steering_state 2:%lf",latest_motor_state[1].degrees);
 
-    OtoController::motor_plant_msg.data = OtoController::latest_motor_state[0].pulse;
-    OtoController::steering_plant_msg.data = OtoController::latest_motor_state[1].degrees;
+    motor_plant_msg.data = latest_motor_state[0].pulse;
+    steering_plant_msg.data = latest_motor_state[1].degrees;
 
 }
 
@@ -56,13 +56,13 @@ void OtoController::imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg) {
     q1 = imu_msg->orientation.x;
     q2 = imu_msg->orientation.y;
     q3 = imu_msg->orientation.z;
-    OtoController::x_accel = imu_msg->linear_acceleration.x;
-    OtoController::y_accel = imu_msg->linear_acceleration.y;
+    x_accel = imu_msg->linear_acceleration.x;
+    y_accel = imu_msg->linear_acceleration.y;
 
     //tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(rpy.vector.x, rpy.vector.y, rpy.vector.z);
-    tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(OtoController::roll, OtoController::pitch, OtoController::yaw);
-    ROS_INFO("yaw: %lf", OtoController::yaw);
-    ROS_INFO("x accel: %lf", OtoController::x_accel);
+    tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(roll, pitch, yaw);
+    ROS_INFO("yaw: %lf", yaw);
+    ROS_INFO("x accel: %lf", x_accel);
 
 }
 
@@ -78,13 +78,13 @@ void OtoController::publish_motor_command(oto_control::MotorCommand motor_comman
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
     oto_control::MotorCommand motor_command;
-    OtoController::steering_effort_msg.data = msg->data;
+    steering_effort_msg.data = msg->data;
     this->publish_motor_command(motor_command);
 }
 
 void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
     oto_control::MotorCommand motor_command;
-    OtoController::motor_effort_msg.data = msg->data;
+    motor_effort_msg.data = msg->data;
     this->publish_motor_command(motor_command);
 }
 
@@ -117,18 +117,18 @@ bool OtoController::initialize()
     imu_orientation_sub = n.subscribe("imu/data", 1, &OtoController::imu_orientation_callback, this);
 
     //this block is temporary
-    OtoController::motor_command.joint_name = "steering";
-    OtoController::motor_command.position = 1501;
-    OtoController::motor_command.speed = 0;
-    OtoController::motor_command.acceleration = 0;
+    motor_command.joint_name = "steering";
+    motor_command.position = 1501;
+    motor_command.speed = 0;
+    motor_command.acceleration = 0;
 
     //setup configuration
-    OtoController::cfg.cruise_setpoint = 150.0;
-    OtoController::cfg.min_turn_distance = 250.0;
-    OtoController::turn_flag = false;
-    OtoController::turn_state = false;
+    cfg.cruise_setpoint = 150.0;
+    cfg.min_turn_distance = 250.0;
+    turn_flag = false;
 
     bool success = true;
+    state = CRUISE;
     ROS_INFO("Initialized OtoController");
 
     return success;
@@ -138,23 +138,23 @@ void OtoController::sensor_interpret(){
     double distance_plant_comb;
 
     //distance to wall from each sensor
-    OtoController::distance_plant_f = pow(OtoController::latest_ir_data[0].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
-    OtoController::distance_plant_r = pow(OtoController::latest_ir_data[1].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+    distance_plant_f = pow(latest_ir_data[0].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
+    distance_plant_r = pow(latest_ir_data[1].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
-    if(OtoController::distance_plant_f >= OtoController::cfg.min_turn_distance){
-        if(OtoController::turn_flag){
-            OtoController::turn_flag_confidence = max(OtoController::turn_flag_confidence,
-                (OtoController::distance_plant_f - OtoController::cfg.min_turn_distance) / 400);
+    if(distance_plant_f >= cfg.min_turn_distance){
+        if(turn_flag){
+            turn_flag_confidence = max(turn_flag_confidence,
+                (distance_plant_f - cfg.min_turn_distance) / 400);
         }
         else{
-            OtoController::turn_flag = true;
-            OtoController::turn_flag_confidence = (OtoController::distance_plant_f - OtoController::cfg.min_turn_distance) / 400;
+            turn_flag = true;
+            turn_flag_confidence = (distance_plant_f - cfg.min_turn_distance) / 400;
         }
     }
 
-    if(OtoController::distance_plant_r >= OtoController::cfg.min_turn_distance){
+    if(distance_plant_r >= cfg.min_turn_distance){
         //cant turn immediately, need some way of telling for sure
-        OtoController::turn_state = true;
+        state = TURN;
     }
 
 }

@@ -17,6 +17,15 @@ int main(int argc,char**argv)
 
 	  while(ros::ok()) {
 
+      switch(controller.state){
+        case CRUISE:
+        ;
+        case TURN:
+        ;
+
+      }
+      //cruise).publish_motor_command(cruise.motor_command);
+
 	    ros::spinOnce();
       rate.sleep();
 	  }

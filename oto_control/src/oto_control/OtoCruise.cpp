@@ -16,18 +16,18 @@ OtoController::CruiseState::CruiseState()
 
 void OtoController::CruiseState::decide_yaw(){
     //set steering_setpoint based on ?
-    CruiseState::parent_controller->steering_setpoint_msg.data = 1500;
-    CruiseState::parent_controller->publish_steering_setpoint();
+    parent_controller->steering_setpoint_msg.data = 1500;
+    parent_controller->publish_steering_setpoint();
 }
 
 void OtoController::CruiseState::decide_vel(){
     //set motor_setpoint based on confidence
-    CruiseState::parent_controller->motor_setpoint_msg.data = 1500;
-    CruiseState::parent_controller->publish_motor_setpoint();
+    parent_controller->motor_setpoint_msg.data = 1500;
+    parent_controller->publish_motor_setpoint();
 }
 
 bool OtoController::CruiseState::initialize(OtoController* controller){
-    CruiseState::parent_controller = controller;
+    parent_controller = controller;
 }
 
 OtoController::CruiseState::~CruiseState()
