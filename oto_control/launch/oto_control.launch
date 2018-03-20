@@ -32,9 +32,10 @@
     	  <param name="use_mag" value="true"/>
     	  <param name="gain_acc" value="0.01"/>
     	  <param name="gain_mag" value="0.01"/>
+	  <param name="gain" value=".01"/>
     </node>
 
-    <!-- pololu servo controller node -->
+    <!-- pololu servo controller node -->e
     <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="ros_pololu_servo_node" output="screen">
         <param name="pololu_motors_yaml" value="$(find ros_pololu_servo)/launch/pololu_motors.yaml" />
 	      <param name="pololu_sensors_yaml" value="$(find ros_pololu_servo)/launch/pololu_sensors.yaml" />
@@ -61,10 +62,12 @@
         <param name="pid_enable_topic" value="steering_pid_enable" />
     </node>
 
+    <!--
     <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot"
       args="/steering_effort/data /steering_plant/data /steering_setpoint/data" />
 
     <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
+    -->
 
     <!-- motor pid -->
     <node name="speed" pkg="pid" type="controller" output="screen" >

@@ -15,6 +15,10 @@
 
 using namespace std;
 
+#define MAX_STEERING_ANGLE    45  //left
+#define MIN_STEERING_ANGLE    -45 //right
+#define MAX_SPEED_PW    1
+
 struct ir_data {
   string name;
   double voltage;
@@ -90,3 +94,8 @@ class OtoController {
         void decide_yaw();
         void decide_vel();
 };
+
+double deg_to_rad(double angle){
+    double angle_rad = angle * M_PI / 180;
+    return angle_rad;
+}

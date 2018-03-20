@@ -17,6 +17,7 @@ int main(int argc,char**argv)
 	  while(ros::ok()) {
       controller.decide_yaw();
       controller.decide_vel();
+      controller.publish_motor_command(controller.motor_command);
 
 	    ros::spinOnce();
       rate.sleep();

@@ -20,7 +20,6 @@ OtoController::~OtoController()
 }
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
-    ROS_INFO("in callback");
     OtoController::latest_ir_data[0].name = msg->sensor_states[0].name;
     OtoController::latest_ir_data[0].voltage = msg->sensor_states[0].voltage;
     OtoController::latest_ir_data[1].name = msg->sensor_states[1].name;
@@ -31,18 +30,17 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
-    ROS_INFO("in callback");
     OtoController::latest_motor_state[0].name = msg->motor_states[0].name;
     OtoController::latest_motor_state[0].pulse = msg->motor_states[0].pulse;
     OtoController::latest_motor_state[0].radians = msg->motor_states[0].radians;
     OtoController::latest_motor_state[0].degrees = msg->motor_states[0].degrees;
-    ROS_INFO("%d",OtoController::latest_motor_state[0].pulse);
+    ROS_INFO("motor_state 1:%d",OtoController::latest_motor_state[0].pulse);
 
     OtoController::latest_motor_state[1].name = msg->motor_states[1].name;
     OtoController::latest_motor_state[1].pulse = msg->motor_states[1].pulse;
     OtoController::latest_motor_state[1].radians = msg->motor_states[1].radians;
     OtoController::latest_motor_state[1].degrees = msg->motor_states[1].degrees;
-    ROS_INFO("%lf",OtoController::latest_motor_state[1].degrees);
+    ROS_INFO("steering_state 2:%lf",OtoController::latest_motor_state[1].degrees);
 
     OtoController::motor_plant_msg.data = OtoController::latest_motor_state[0].pulse;
     OtoController::steering_plant_msg.data = OtoController::latest_motor_state[1].degrees;
@@ -52,21 +50,31 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
 void OtoController::imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg) {
     double q0,q1,q2,q3;
     double roll,pitch,yaw = 0.0;
+    double x_accel, y_accel = 0.0;
 
-    //geometry_msgs::Vector3Stamped rpy;
+    //geometry_msgs::Vector3Stamped ;
 
     q0 = imu_msg->orientation.w;
     q1 = imu_msg->orientation.x;
     q2 = imu_msg->orientation.y;
     q3 = imu_msg->orientation.z;
+    x_accel = imu_msg->linear_acceleration.x;
+    y_accel = imu_msg->linear_acceleration.y;
 
     //tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(rpy.vector.x, rpy.vector.y, rpy.vector.z);
     tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(roll, pitch, yaw);
-    ROS_INFO("%lf",yaw);
+    ROS_INFO("yaw: %lf",yaw);
+    ROS_INFO("x accel: %lf",x_accel);
 
 }
 
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
+    double position = -.2;
+    double pose = deg_to_rad(position);
+    ROS_INFO("steering command in rad %lf",pose);
+    motor_command.joint_name = "drive";
+    //motor_command.position = deg_to_rad(0.0);
+    motor_command.position = position;
     motor_pub.publish(motor_command);
 }
 
