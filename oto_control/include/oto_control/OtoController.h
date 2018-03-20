@@ -10,6 +10,8 @@
 #include <angles/angles.h>
 #include <string>
 #include <std_msgs/Float64.h>
+#include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Vector3Stamped.h>
 
 using namespace std;
 
@@ -31,6 +33,8 @@ struct configuration {
 };
 
 class OtoController {
+    typedef sensor_msgs::Imu              ImuMsg;
+
     private:
         ros::NodeHandle n;
         ros::Subscriber sensor_sub;
@@ -44,6 +48,8 @@ class OtoController {
         ros::Publisher motor_plant_pub;
         ros::Publisher motor_setpoint_pub;
         ros::Subscriber motor_effort_sub;
+
+        ros::Subscriber imu_orientation_sub;
         //ros::Rate rate;
 
         int rate_hz;
@@ -52,10 +58,7 @@ class OtoController {
         ir_data latest_ir_data[2]; //first front, second rear
         motor_data latest_motor_state[2]; //first motor, second steering
         configuration cfg;
-        double steering_plant;
-        double distance_plant_f;
-        double distance_plant_r;
-        double motor_plant;
+        double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
         bool turning;
         bool turn_flag;
         double turn_flag_confidence;
@@ -78,6 +81,7 @@ class OtoController {
         void publish_motor_command(oto_control::MotorCommand motor_command);
         void steering_effort_callback(const std_msgs::Float64::ConstPtr& msg);
         void motor_effort_callback(const std_msgs::Float64::ConstPtr& msg);
+        void imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg);
         void publish_steering_setpoint();
         void publish_steering_plant();
         void publish_motor_setpoint();

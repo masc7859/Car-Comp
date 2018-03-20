@@ -1,5 +1,39 @@
-
 <launch>
+    <node pkg="nodelet" type="nodelet" name="imu_manager"
+        args="manager" output="screen" />
+
+    <node pkg="nodelet" type="nodelet" name="PhidgetsImuNodelet"
+    	  args="load phidgets_imu/PhidgetsImuNodelet imu_manager"
+	      output="screen">
+    # supported data rates: 4 8 16 24 32 40 ... 1000 (in ms)
+        <param name="period" value="4"/>
+    # optional param serial_number, default is -1
+    <!-- <param name="serial_number" value="123456"/> -->
+    # compass correction params (see http://www.phidgets.com/docs/1044_User_Guide)
+    <!-- <param name="cc_mag_field" value="0.52859"/>
+         <param name="cc_offset0" value="0.03921"/>
+         <param name="cc_offset1" value="0.19441"/>
+         <param name="cc_offset2" value="-0.03493"/>
+         <param name="cc_gain0" value="1.81704"/>
+         <param name="cc_gain1" value="1.81028"/>
+         <param name="cc_gain2" value="2.04819"/>
+         <param name="cc_t0" value="0.00142"/>
+         <param name="cc_t1" value="-0.03591"/>
+         <param name="cc_t2" value="0.00160 "/>
+         <param name="cc_t3" value="-0.05038"/>
+         <param name="cc_t4" value="-0.03942"/>
+         <param name="cc_t5" value="-0.05673"/> -->
+    </node>
+
+    <node pkg="imu_filter_madgwick" type="imu_filter_node"
+      	name="imu_filter_gain_node" output="screen">
+    	  <param name="do_bias_estimation" value="true"/>
+    	  <param name="do_adaptive_gain" value="true"/>
+    	  <param name="use_mag" value="true"/>
+    	  <param name="gain_acc" value="0.01"/>
+    	  <param name="gain_mag" value="0.01"/>
+    </node>
+
     <!-- pololu servo controller node -->
     <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="ros_pololu_servo_node" output="screen">
         <param name="pololu_motors_yaml" value="$(find ros_pololu_servo)/launch/pololu_motors.yaml" />
@@ -33,7 +67,7 @@
     <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
 
     <!-- motor pid -->
-    <node name="steering" pkg="pid" type="controller" output="screen" >
+    <node name="speed" pkg="pid" type="controller" output="screen" >
         <param name="Kp" value="5.0" />
         <param name="Ki" value="0.0" />
         <param name="Kd" value="0.1" />
@@ -49,10 +83,12 @@
         <param name="pid_enable_topic" value="motor_pid_enable" />
     </node>
 
+    <!--
     <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot"
       args="/motor_effort/data /motor_plant/data /motor_setpoint/data" />
 
     <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
+    -->
 
     <!-- robot controller node -->
     <node pkg="oto_control" type="oto_control_node" name="oto_control_node" output="screen">

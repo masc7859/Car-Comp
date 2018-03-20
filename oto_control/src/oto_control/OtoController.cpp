@@ -4,6 +4,8 @@
 #include <math.h>
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 using namespace std;
 
@@ -47,6 +49,23 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
 
 }
 
+void OtoController::imu_orientation_callback(const ImuMsg::ConstPtr& imu_msg) {
+    double q0,q1,q2,q3;
+    double roll,pitch,yaw = 0.0;
+
+    //geometry_msgs::Vector3Stamped rpy;
+
+    q0 = imu_msg->orientation.w;
+    q1 = imu_msg->orientation.x;
+    q2 = imu_msg->orientation.y;
+    q3 = imu_msg->orientation.z;
+
+    //tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(rpy.vector.x, rpy.vector.y, rpy.vector.z);
+    tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(roll, pitch, yaw);
+    ROS_INFO("%lf",yaw);
+
+}
+
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
     motor_pub.publish(motor_command);
 }
@@ -64,17 +83,17 @@ void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg
 }
 
 void OtoController::publish_steering_setpoint() {
-    OtoController::steering_setpoint_msg.data = 0.0;
-    steering_plant_pub.publish(OtoController::steering_setpoint_msg);
+    //OtoController::steering_setpoint_msg.data = 0.0;
+    //steering_plant_pub.publish(OtoController::steering_setpoint_msg);
 }
 
 void OtoController::publish_motor_setpoint() {
-    motor_plant_pub.publish(OtoController::motor_setpoint_msg);
+    //motor_plant_pub.publish(OtoController::motor_setpoint_msg);
 }
 
 bool OtoController::initialize()
 {
-    //for pololu
+    //pololu
     sensor_sub = n.subscribe("pololu/sensor_states", 1, &OtoController::sensor_state_callback, this);
     motor_sub = n.subscribe("pololu/motor_states", 1, &OtoController::motor_state_callback, this);
     motor_pub = n.advertise<oto_control::MotorCommand>("pololu/command", 1);
@@ -87,6 +106,9 @@ bool OtoController::initialize()
     steering_plant_pub = n.advertise<std_msgs::Float64>("motor_plant", 1);
     steering_setpoint_pub = n.advertise<std_msgs::Float64>("motor_setpoint", 1);
     steering_effort_sub = n.subscribe("motor_effort", 1, &OtoController::motor_effort_callback, this);
+
+    //imu
+    imu_orientation_sub = n.subscribe("imu/data", 1, &OtoController::imu_orientation_callback, this);
 
     //this block is temporary
     OtoController::motor_command.joint_name = "steering";
