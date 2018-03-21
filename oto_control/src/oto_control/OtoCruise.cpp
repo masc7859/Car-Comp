@@ -18,7 +18,8 @@ void OtoController::CruiseState::cruise(){
     //sensor_interpret();
     //parent_controller->steering_setpoint_msg.data = 1500;
     //parent_controller->steering_plant_msg.data = 1500;
-    parent_controller->publish_steering_setpoint();
+    //parent_controller->publish_steering_setpoint();
+    parent_controller->state = TURN;
 }
 
 void OtoController::CruiseState::decide_yaw(){
@@ -55,9 +56,12 @@ void OtoController::CruiseState::sensor_interpret(){
     }
 
     if(parent_controller->distance_plant_r >= parent_controller->cfg.min_turn_distance){
+    	//need to record some data for the TURN state as we go into it
+		parent_controller->turn_init_yaw = parent_controller->yaw;
+		
         //cant turn immediately, need some way of telling for sure
         parent_controller->state = TURN;
-    }
+	}
 
 }
 

@@ -109,6 +109,7 @@ class OtoController {
         configuration cfg;
 
         int state;
+        double turn_init_yaw;
         double roll,pitch,yaw; //in rad
         double x_accel, y_accel; //in m/s
         double vel_est;
