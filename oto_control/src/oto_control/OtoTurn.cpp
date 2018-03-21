@@ -29,20 +29,21 @@ void OtoController::TurnState::turn(){
 }
 
 void OtoController::TurnState::sensor_interpret(){
-	//option 1: use yaw, check if we have turned 90 degrees yet.
+	/*//option 1: use yaw, check if we have turned 90 degrees yet.
 	if (parent_controller->yaw <= final_yaw){
 		parent_controller->state = CRUISE;
 	}
-  /*
+  */
 	//option 2: use ir sensors, turn until paralell to a wall (withen error bound turh_threshold):
-	ir_f_distance = pow(parent_controller->latest_ir_data[0].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
-	if_r_distance = pow(parent_controller->latest_ir_data[1].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+	double ir_f_distance, ir_r_distance, infinity_threshold, turn_threshold;
+  ir_f_distance = pow(parent_controller->latest_ir_data[0].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
+	ir_r_distance = pow(parent_controller->latest_ir_data[1].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
 	infinity_threshold = parent_controller->cfg.min_turn_distance; //really just a value to not do math with absurdly large sensor data
 	turn_threshold = 10; //10 cm for now, replace once testing done
 
-	if ((ir_f_distance <= threshold) && (ir_r_distance <= threshold)){
-		if (abs(ir_f_distance - ir_r_distance)) < turn_threshold{
+	if ((ir_f_distance <= infinity_threshold) && (ir_r_distance <= infinity_threshold)){
+		if (abs(ir_f_distance - ir_r_distance) < turn_threshold){
 			//we are paralell(ish) to a wall
 			parent_controller->state = CRUISE;
 		}
@@ -54,7 +55,7 @@ void OtoController::TurnState::sensor_interpret(){
 
 	//option 3: ignore yaw, use magnometer data (which may not drift as much?)
 	//not sure how to implement, or if it is a good idea, would require testing
-  */
+ 
 }
 
 OtoController::TurnState::~TurnState()
