@@ -16,12 +16,13 @@ int main(int argc,char**argv)
     usleep(1000*1000);
 
 	  while(ros::ok()) {
-
       switch(controller.state){
-        case CRUISE:
+        case 0:
           controller.cruiser.cruise();
-        case TURN:
+          break;
+        case 1:
           controller.turner.turn();
+          break;
       }
       //cruise).publish_motor_command(cruise.motor_command);
 
