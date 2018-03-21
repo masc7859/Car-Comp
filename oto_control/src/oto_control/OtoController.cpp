@@ -18,28 +18,31 @@ OtoController::~OtoController() {
 }
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
-    latest_ir_data[0].name = msg->sensor_states[0].name;
-    latest_ir_data[0].voltage = msg->sensor_states[0].voltage;
-    latest_ir_data[1].name = msg->sensor_states[1].name;
-    latest_ir_data[1].voltage = msg->sensor_states[1].voltage;
-    ROS_INFO("IR in voltage: %f", latest_ir_data[1].voltage);
+    latest_ir_data[FRONT_IR].name = msg->sensor_states[FRONT_IR].name;
+    latest_ir_data[FRONT_IR].voltage = msg->sensor_states[FRONT_IR].voltage;
+    latest_ir_data[REAR_IR].name = msg->sensor_states[REAR_IR].name;
+    latest_ir_data[REAR_IR].voltage = msg->sensor_states[REAR_IR].voltage;
+    ROS_INFO("IR in voltage (rear): %f", latest_ir_data[REAR_IR].voltage);
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
-    latest_motor_state[0].name = msg->motor_states[0].name;
-    latest_motor_state[0].pulse = msg->motor_states[0].pulse;
-    latest_motor_state[0].radians = msg->motor_states[0].radians;
-    latest_motor_state[0].degrees = msg->motor_states[0].degrees;
-    ROS_INFO("motor_state 1:%d",latest_motor_state[0].pulse);
+    latest_motor_state[MOTOR].name = msg->motor_states[MOTOR].name;
+    latest_motor_state[MOTOR].pulse = msg->motor_states[MOTOR].pulse;
+    latest_motor_state[MOTOR].radians = msg->motor_states[MOTOR].radians;
+    latest_motor_state[MOTOR].degrees = msg->motor_states[MOTOR].degrees;
+    ROS_INFO("motor_state:%d",latest_motor_state[MOTOR].pulse);
 
-    latest_motor_state[1].name = msg->motor_states[1].name;
-    latest_motor_state[1].pulse = msg->motor_states[1].pulse;
-    latest_motor_state[1].radians = msg->motor_states[1].radians;
-    latest_motor_state[1].degrees = msg->motor_states[1].degrees;
-    ROS_INFO("steering_state 2:%lf",latest_motor_state[1].degrees);
+    latest_motor_state[STEERING].name = msg->motor_states[STEERING].name;
+    latest_motor_state[STEERING].pulse = msg->motor_states[STEERING].pulse;
+    latest_motor_state[STEERING].radians = msg->motor_states[STEERING].radians;
+    latest_motor_state[STEERING].degrees = msg->motor_states[STEERING].degrees;
+    ROS_INFO("steering_state degrees:%lf",latest_motor_state[STEERING].degrees);
+    ROS_INFO("steering_state radians:%lf",latest_motor_state[STEERING].radians);
 
     motor_plant_msg.data = latest_motor_state[0].pulse;
     steering_plant_msg.data = latest_motor_state[1].degrees;
+    motor_plant_pub.publish(motor_plant_msg);
+    steering_plant_pub.publish(steering_plant_msg);
 }
 
 void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
@@ -66,6 +69,7 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
     t_prev = t;
 
     vel_est = vel_est + x_accel * t_interval;
+    ROS_INFO("Vel Estimate: %lf", vel_est);
 
 }
 
@@ -86,16 +90,18 @@ void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& 
 
 void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
     motor_effort_msg.data = msg->data;
+    ROS_INFO("motor_effort: %lf", motor_effort_msg.data);
+
 }
 
 void OtoController::publish_steering_setpoint() {
     steering_setpoint_pub.publish(steering_setpoint_msg);
-    steering_plant_pub.publish(steering_plant_msg);
     ROS_INFO("steering_setpoint: %lf", steering_setpoint_msg.data);
 }
 
 void OtoController::publish_motor_setpoint() {
-    //motor_plant_pub.publish(OtoController::motor_setpoint_msg);
+    motor_plant_pub.publish(motor_setpoint_msg);
+    ROS_INFO("motor_setpoint: %lf", motor_setpoint_msg.data);
 }
 
 bool OtoController::initialize() {

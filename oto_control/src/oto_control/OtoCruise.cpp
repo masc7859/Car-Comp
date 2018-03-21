@@ -11,7 +11,7 @@ using namespace std;
 
 OtoController::CruiseState::CruiseState()
 {
-    ROS_INFO("Moving Into Cruise State");
+    int x = 0;
 }
 
 void OtoController::CruiseState::cruise(){
@@ -35,10 +35,14 @@ void OtoController::CruiseState::decide_vel(){
 
 void OtoController::CruiseState::sensor_interpret(){
     double distance_plant_comb;
+    double distance_plant_f, distance_plant_r;
 
     //distance to wall from each sensor
-    distance_plant_f = pow(parent_controller->latest_ir_data[0].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
-    distance_plant_r = pow(parent_controller->latest_ir_data[1].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+    distance_plant_f = pow(parent_controller->latest_ir_data[FRONT_IR].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
+    distance_plant_r = pow(parent_controller->latest_ir_data[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+
+    ROS_INFO("actual distance (front): %lf", distance_plant_f);
+    ROS_INFO("actual distance (rear): %lf", distance_plant_r);
 
     //we want plant_f - plant_r = 0, thats our cruise condition
 
@@ -63,10 +67,13 @@ void OtoController::CruiseState::sensor_interpret(){
 bool OtoController::CruiseState::initialize(OtoController* controller){
     parent_controller = controller;
     turn_flag = false;
-    ROS_INFO("Cruise State Initialized");
+
+    bool success = true;
+    ROS_INFO("Initialized Cruise State");
+    return success;
 }
 
 OtoController::CruiseState::~CruiseState()
 {
-    ROS_INFO("Leaving Cruise State");
+    ROS_INFO("Destructing Cruise State");
 }

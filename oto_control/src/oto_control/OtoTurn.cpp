@@ -18,6 +18,10 @@ bool OtoController::TurnState::initialize(OtoController* controller){
     parent_controller = controller;
     init_yaw = parent_controller->yaw;
     final_yaw = parent_controller->yaw - (M_PI / 2);
+    
+    bool success = true;
+    ROS_INFO("Initialized Cruise State");
+    return success;
 }
 
 void OtoController::TurnState::turn(){

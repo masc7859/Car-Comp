@@ -21,6 +21,10 @@ using namespace std;
 #define MAX_SPEED_PW_R    0.437
 #define CRUISE    0
 #define TURN    1
+#define STEERING    1
+#define MOTOR   0
+#define FRONT_IR   0
+#define REAR_IR   1
 
 double deg_to_rad(double angle);
 
@@ -69,7 +73,7 @@ class OtoController {
             public:
               double init_yaw;
               double final_yaw;
-              double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
+              double steering_plant, motor_plant;
               bool turn_flag;
               double turn_flag_confidence;
               OtoController* parent_controller;
