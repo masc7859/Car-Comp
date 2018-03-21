@@ -77,6 +77,7 @@ class OtoController {
               bool turn_flag;
               double turn_flag_confidence;
               OtoController* parent_controller;
+              oto_control::MotorCommand motor_command;
 
               CruiseState();
               ~CruiseState();
@@ -92,8 +93,9 @@ class OtoController {
             public:
               double init_yaw;
               double final_yaw;
-              double steering_plant, distance_plant_f, distance_plant_r, motor_plant;
+              double steering_plant, motor_plant;
               OtoController* parent_controller;
+              oto_control::MotorCommand motor_command;
 
               TurnState();
               ~TurnState();
@@ -111,8 +113,7 @@ class OtoController {
         double x_accel, y_accel; //in m/s
         double vel_est;
         float t_prev;
-
-        oto_control::MotorCommand motor_command;
+        double distance_plant_f, distance_plant_r;
 
         std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
                           motor_plant_msg, motor_effort_msg, motor_setpoint_msg;

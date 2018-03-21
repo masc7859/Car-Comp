@@ -18,11 +18,16 @@ OtoController::~OtoController() {
 }
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
-    latest_ir_data[FRONT_IR].name = msg->sensor_states[FRONT_IR].name;
-    latest_ir_data[FRONT_IR].voltage = msg->sensor_states[FRONT_IR].voltage;
-    latest_ir_data[REAR_IR].name = msg->sensor_states[REAR_IR].name;
-    latest_ir_data[REAR_IR].voltage = msg->sensor_states[REAR_IR].voltage;
-    ROS_INFO("IR in voltage (rear): %f", latest_ir_data[REAR_IR].voltage);
+    //latest_ir_data[FRONT_IR].name = msg->sensor_states[FRONT_IR].name;
+    //latest_ir_data[FRONT_IR].voltage = msg->sensor_states[FRONT_IR].voltage;
+    distance_plant_f = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * sqrt(2.0)/2.0 * 7.817 * pow(10.0,10.0) + 34.18;
+    //latest_ir_data[REAR_IR].name = msg->sensor_states[REAR_IR].name;
+    //latest_ir_data[REAR_IR].voltage = msg->sensor_states[REAR_IR].voltage;
+    distance_plant_r = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+
+    steering_plant_msg.data = distance_plant_r;
+    steering_plant_pub.publish(steering_plant_msg);
+    ROS_INFO("IR in voltage (rear): %f", distance_plant_r);
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
@@ -38,11 +43,6 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
     latest_motor_state[STEERING].degrees = msg->motor_states[STEERING].degrees;
     ROS_INFO("steering_state degrees:%lf",latest_motor_state[STEERING].degrees);
     ROS_INFO("steering_state radians:%lf",latest_motor_state[STEERING].radians);
-
-    motor_plant_msg.data = latest_motor_state[0].pulse;
-    steering_plant_msg.data = latest_motor_state[1].degrees;
-    motor_plant_pub.publish(motor_plant_msg);
-    steering_plant_pub.publish(steering_plant_msg);
 }
 
 void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
@@ -105,6 +105,8 @@ void OtoController::publish_motor_setpoint() {
 }
 
 bool OtoController::initialize() {
+    oto_control::MotorCommand motor_command;
+
     //pololu
     sensor_sub = n.subscribe("pololu/sensor_states", 1, &OtoController::sensor_state_callback, this);
     motor_sub = n.subscribe("pololu/motor_states", 1, &OtoController::motor_state_callback, this);
