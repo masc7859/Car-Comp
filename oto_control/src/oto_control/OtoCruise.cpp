@@ -19,7 +19,7 @@ void OtoController::CruiseState::cruise(){
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();
 
-    //decide_vel();
+    decide_vel();
     decide_yaw();
 }
 
@@ -32,7 +32,7 @@ void OtoController::CruiseState::decide_yaw(){ //bad name, change
 void OtoController::CruiseState::decide_vel(){
     //set motor_setpoint based on confidence
     //parent_controller->motor_setpoint_msg.data = 1500;
-    //parent_controller->publish_motor_setpoint();
+    //parent_controller->publish_motor_int();
     motor_command.joint_name = "drive";
     motor_command.position = MAX_SPEED_PW_F * 0.15;
     parent_controller->publish_motor_command(motor_command);
