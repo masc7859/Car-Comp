@@ -18,14 +18,16 @@ bool OtoController::TurnState::initialize(OtoController* controller){
     parent_controller = controller;
     init_yaw = parent_controller->yaw;
     final_yaw = parent_controller->yaw - (M_PI / 2);
-
+	
     bool success = true;
-    ROS_INFO("Initialized Cruise State");
+    ROS_INFO("Initialized Turn State");
     return success;
 }
 
 void OtoController::TurnState::turn(){
-
+    motor_command.joint_name = "steering";
+    motor_command.position = deg_to_rad(45);
+    parent_controller->publish_motor_command(motor_command);
 }
 
 void OtoController::TurnState::sensor_interpret(){
@@ -35,14 +37,14 @@ void OtoController::TurnState::sensor_interpret(){
 	}
   */
 	//option 2: use ir sensors, turn until paralell to a wall (withen error bound turh_threshold):
-	double infinity_threshold, turn_threshold;
+	double infinity_threshold, parallel_threshold;
 
 	infinity_threshold = parent_controller->cfg.min_turn_distance; //really just a value to not do math with absurdly large sensor data
-	turn_threshold = 10; //10 cm for now, replace once testing done
+	parallel_threshold = 10; //10 cm for now, replace once testing done
 
 	if ((parent_controller->distance_plant_f <= infinity_threshold) && (parent_controller->distance_plant_r <= infinity_threshold)){
-		if (abs(parent_controller->distance_plant_f - parent_controller->distance_plant_r) < turn_threshold){
-			//we are paralell(ish) to a wall
+		if (abs(parent_controller->distance_plant_f - parent_controller->distance_plant_r) < parallel_threshold){
+			//we are parallel(ish) to a wall
 			parent_controller->state = CRUISE;
 		}
 	}
@@ -51,8 +53,6 @@ void OtoController::TurnState::sensor_interpret(){
 		//TURN SLOWER not really sure what to modify here
 	}
 
-	//option 3: ignore yaw, use magnometer data (which may not drift as much?)
-	//not sure how to implement, or if it is a good idea, would require testing
 
 }
 

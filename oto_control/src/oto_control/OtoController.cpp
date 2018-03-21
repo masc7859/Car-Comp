@@ -26,8 +26,8 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
     distance_plant_r = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
     steering_plant_msg.data = distance_plant_r;
-    steering_plant_pub.publish(steering_plant_msg);
-    ROS_INFO("IR in voltage (rear): %f", distance_plant_r);
+    steering_plant_pub.publish(steering_plant_msg);//publish distance reading from rear sensor to PID
+    ROS_INFO("IR in voltage (rear): %f", distance_plant_r);//log it
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
@@ -74,13 +74,13 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
 }
 
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
-    double position = -.2;
-    double pose = deg_to_rad(position);
-    motor_command.joint_name = "drive";
+    //double position = -.2;//slow forward speed
+    //double pose = deg_to_rad(position);
+    //motor_command.joint_name = "drive";
     //motor_command.position = deg_to_rad(0.0);
-    motor_command.position = position;
+    //motor_command.position = position;
     motor_pub.publish(motor_command);
-    ROS_INFO("steering command in rad %lf",pose);
+    //ROS_INFO("steering command in rad %lf",pose);
 }
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
