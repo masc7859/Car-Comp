@@ -26,8 +26,9 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
     distance_plant_r = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
     steering_plant_msg.data = distance_plant_r;
-    steering_plant_pub.publish(steering_plant_msg);//publish distance reading from rear sensor to PID
-    ROS_INFO("IR in voltage (rear): %f", distance_plant_r);//log it
+    steering_plant_pub.publish(steering_plant_msg);
+    ROS_INFO("Publishing steering plant: %lf", distance_plant_r);
+    ROS_INFO("Publishing steering plant_f: %lf", distance_plant_f);
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
@@ -35,7 +36,7 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
     latest_motor_state[MOTOR].pulse = msg->motor_states[MOTOR].pulse;
     latest_motor_state[MOTOR].radians = msg->motor_states[MOTOR].radians;
     latest_motor_state[MOTOR].degrees = msg->motor_states[MOTOR].degrees;
-    ROS_INFO("motor_state:%d",latest_motor_state[MOTOR].pulse);
+    //ROS_INFO("motor_state:%d",latest_motor_state[MOTOR].pulse);
 
     latest_motor_state[STEERING].name = msg->motor_states[STEERING].name;
     latest_motor_state[STEERING].pulse = msg->motor_states[STEERING].pulse;
@@ -74,8 +75,6 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
 }
 
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
-    //double position = -.2;//slow forward speed
-    //double pose = deg_to_rad(position);
     //motor_command.joint_name = "drive";
     //motor_command.position = deg_to_rad(0.0);
     //motor_command.position = position;
@@ -84,8 +83,8 @@ void OtoController::publish_motor_command(oto_control::MotorCommand motor_comman
 }
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
-    steering_effort_msg.data = msg->data;
-    ROS_INFO("steering_effort: %lf", steering_effort_msg.data);
+    steering_effort_msg.data = deg_to_rad(msg->data);
+    ROS_INFO("steering_effort in rads: %lf", steering_effort_msg.data);
 }
 
 void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
