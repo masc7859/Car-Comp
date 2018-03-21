@@ -75,13 +75,11 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
 }
 
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
-    double position = -.2;
-    double pose = deg_to_rad(position);
     //motor_command.joint_name = "drive";
     //motor_command.position = deg_to_rad(0.0);
     //motor_command.position = position;
     motor_pub.publish(motor_command);
-    ROS_INFO("steering command in rad %lf",pose);
+    //ROS_INFO("steering command in rad %lf",pose);
 }
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
