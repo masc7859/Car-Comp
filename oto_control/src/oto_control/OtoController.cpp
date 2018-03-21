@@ -22,7 +22,7 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
     latest_ir_data[0].voltage = msg->sensor_states[0].voltage;
     latest_ir_data[1].name = msg->sensor_states[1].name;
     latest_ir_data[1].voltage = msg->sensor_states[1].voltage;
-    ROS_INFO("%f", latest_ir_data[1].voltage);
+    ROS_INFO("IR in voltage: %f", latest_ir_data[1].voltage);
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
@@ -72,15 +72,16 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
     double position = -.2;
     double pose = deg_to_rad(position);
-    ROS_INFO("steering command in rad %lf",pose);
     motor_command.joint_name = "drive";
     //motor_command.position = deg_to_rad(0.0);
     motor_command.position = position;
     motor_pub.publish(motor_command);
+    ROS_INFO("steering command in rad %lf",pose);
 }
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
     steering_effort_msg.data = msg->data;
+    ROS_INFO("steering_effort: %lf", steering_effort_msg.data);
 }
 
 void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
@@ -88,8 +89,9 @@ void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg
 }
 
 void OtoController::publish_steering_setpoint() {
-    //OtoController::steering_setpoint_msg.data = 0.0;
-    //steering_plant_pub.publish(OtoController::steering_setpoint_msg);
+    steering_setpoint_pub.publish(steering_setpoint_msg);
+    steering_plant_pub.publish(steering_plant_msg);
+    ROS_INFO("steering_setpoint: %lf", steering_setpoint_msg.data);
 }
 
 void OtoController::publish_motor_setpoint() {
@@ -107,33 +109,35 @@ bool OtoController::initialize() {
     steering_setpoint_pub = n.advertise<std_msgs::Float64>("steering_setpoint", 1);
     steering_effort_sub = n.subscribe("steering_effort", 1, &OtoController::steering_effort_callback, this);
 
-    steering_plant_pub = n.advertise<std_msgs::Float64>("motor_plant", 1);
-    steering_setpoint_pub = n.advertise<std_msgs::Float64>("motor_setpoint", 1);
-    steering_effort_sub = n.subscribe("motor_effort", 1, &OtoController::motor_effort_callback, this);
+    motor_plant_pub = n.advertise<std_msgs::Float64>("motor_plant", 1);
+    motor_setpoint_pub = n.advertise<std_msgs::Float64>("motor_setpoint", 1);
+    motor_effort_sub = n.subscribe("motor_effort", 1, &OtoController::motor_effort_callback, this);
 
     //imu
     imu_orientation_sub = n.subscribe("imu/data", 1, &OtoController::imu_callback, this);
 
     //set speed(aceleration) and acceleration(jerk)
     motor_command.joint_name = "steering";
-    motor_command.position = 1500;
+    motor_command.position = 0;
     motor_command.speed = 2;
     motor_command.acceleration = 0;
-    this->publish_motor_command(motor_command);
+    //this->publish_steering_command(motor_command);
 
     motor_command.joint_name = "drive";
-    motor_command.position = 1500;
+    motor_command.position = 0;
     motor_command.speed = 5;
     motor_command.acceleration = 0;
-    this->publish_motor_command(motor_command);
+    //this->publish_motor_command(motor_command);
 
     //setup configuration
     cfg.cruise_setpoint = 150.0;
     cfg.min_turn_distance = 250.0;
 
+    cruiser.initialize(this);
+    turner.initialize(this);
+
     state = CRUISE;
     t_prev = ros::Time::now().toSec();
-
 
     bool success = true;
     ROS_INFO("Initialized OtoController");

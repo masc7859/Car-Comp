@@ -3,10 +3,7 @@
 int main(int argc,char**argv)
 {
     ros::init(argc, argv, "oto_control");
-
     OtoController controller;
-    OtoController::CruiseState cruiser;
-    OtoController::TurnState turner;
 
     if(!controller.initialize()) {
         ROS_INFO("Failed to initialize ros_oto_controller_node");
@@ -16,15 +13,15 @@ int main(int argc,char**argv)
     }
 
     ros::Rate rate(controller.get_rate_hz());
+    usleep(1000*1000);
 
 	  while(ros::ok()) {
 
       switch(controller.state){
         case CRUISE:
-        cruiser.cruise();
+          controller.cruiser.cruise();
         case TURN:
-        turner.turn();
-
+          controller.turner.turn();
       }
       //cruise).publish_motor_command(cruise.motor_command);
 

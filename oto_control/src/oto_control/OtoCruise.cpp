@@ -14,6 +14,13 @@ OtoController::CruiseState::CruiseState()
     ROS_INFO("Moving Into Cruise State");
 }
 
+void OtoController::CruiseState::cruise(){
+    //sensor_interpret();
+    parent_controller->steering_setpoint_msg.data = 1500;
+    parent_controller->steering_plant_msg.data = 1500;
+    parent_controller->publish_steering_setpoint();
+}
+
 void OtoController::CruiseState::decide_yaw(){
     //set steering_setpoint based on ?
     parent_controller->steering_setpoint_msg.data = 1500;
@@ -56,6 +63,7 @@ void OtoController::CruiseState::sensor_interpret(){
 bool OtoController::CruiseState::initialize(OtoController* controller){
     parent_controller = controller;
     turn_flag = false;
+    ROS_INFO("Cruise State Initialized");
 }
 
 OtoController::CruiseState::~CruiseState()

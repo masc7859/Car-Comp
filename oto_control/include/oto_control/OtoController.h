@@ -81,7 +81,7 @@ class OtoController {
               void decide_vel();
               void sensor_interpret();
               void cruise();
-        };
+        } cruiser;
 
         class TurnState {
             private:
@@ -96,10 +96,8 @@ class OtoController {
               bool initialize(OtoController* controller);
               void sensor_interpret();
               void turn();
-        };
+        } turner;
 
-        CruiseState Cruise;
-        TurnState Turn;
         ir_data latest_ir_data[2]; //first front, second rear
         motor_data latest_motor_state[2]; //first motor, second steering
         configuration cfg;
