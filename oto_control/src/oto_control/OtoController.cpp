@@ -21,8 +21,8 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
     distance_plant_f = (pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18) - 1; //sqrt(2.0)/2.0
     distance_plant_r = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
-    if(distance_plant_f && distance_plant_r != 0.0) {
-        steering_plant_msg.data = (distance_plant_r + distance_plant_f) / 2.0;
+    if(distance_plant_r != 0.0) {
+        steering_plant_msg.data = distance_plant_r;
         steering_plant_pub.publish(steering_plant_msg);
         ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
     }

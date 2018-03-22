@@ -53,7 +53,7 @@
         <param name="upper_limit" value="30" />
         <param name="lower_limit" value="-30" />
         <param name="windup_limit" value="10" />
-        <param name="cutoff_frequency" value="20" />
+        <!--<param name="cutoff_frequency" value="20" />-->
         <param name="max_loop_frequency" value="20" />
         <param name="min_loop_frequency" value="10" />
         <param name="topic_from_plant" value="steering_plant" />
