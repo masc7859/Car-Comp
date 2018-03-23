@@ -15,6 +15,8 @@ OtoController::CruiseState::CruiseState()
 }
 
 void OtoController::CruiseState::cruise(){
+    parent_controller->debug_msg.data = "in Cruise";
+    parent_controller->debug_pub.publish(parent_controller->debug_msg);
     sensor_interpret();
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();

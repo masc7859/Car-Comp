@@ -144,7 +144,7 @@ bool OtoController::initialize() {
 
     //setup configuration
     cfg.cruise_setpoint = 0.0;
-    cfg.min_turn_distance = 550.0;
+    cfg.min_turn_distance = 350.0;
     filter_ir_count = 0;
     vector<double> ir_count_vec;
 
