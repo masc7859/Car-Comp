@@ -21,13 +21,14 @@ void OtoController::CruiseState::cruise(){
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();
 
-    decide_vel();
+    //decide_vel();
     decide_yaw();
 }
 
 void OtoController::CruiseState::decide_yaw(){ //bad name, change
     motor_command.joint_name = "steering";
-    motor_command.position = parent_controller->steering_effort_msg.data;
+    //motor_command.position = deg_to_rad(10.);
+    motor_command.position = parent_controller->steering_effort_msg.data + deg_to_rad(10.);
     parent_controller->publish_motor_command(motor_command);
 }
 
