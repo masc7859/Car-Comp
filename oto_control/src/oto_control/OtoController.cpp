@@ -6,6 +6,7 @@
 #include <std_msgs/Float64.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
+#include <vector>
 
 using namespace std;
 
@@ -18,15 +19,28 @@ OtoController::~OtoController() {
 }
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
+    double distance_plant_comb;
     distance_plant_left = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
     distance_plant_right = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
-    if(distance_plant_right != 0.0 ) {
-        steering_plant_msg.data = distance_plant_left - distance_plant_right;
-        if(!isnan(steering_plant_msg.data)){
-            steering_plant_pub.publish(steering_plant_msg);
-            ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
-        }
+    distance_plant_comb = distance_plant_left - distance_plant_right;
+
+    if((distance_plant_right != 0.0) && !isnan(steering_plant_msg.data)) {
+        filter_ir(distance_plant_comb);
+    }
+}
+
+void OtoController::filter_ir(double distance_plant_comb) {
+    if(ir_count_vec.size() != 5.) {
+      ir_count_vec.push_back(distance_plant_comb);
+    }
+    else {
+      sort(ir_count_vec.begin(), ir_count_vec.end());
+      steering_plant_msg.data = ir_count_vec[2];
+      steering_plant_pub.publish(steering_plant_msg);
+      ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
+      ir_count_vec.clear();
+      ir_count_vec.push_back(distance_plant_comb);
     }
 }
 
@@ -129,6 +143,8 @@ bool OtoController::initialize() {
     //setup configuration
     cfg.cruise_setpoint = 0.0;
     cfg.min_turn_distance = 550.0;
+    filter_ir_count = 0;
+    vector<double> ir_count_vec;
 
     cruiser.initialize(this);
     turner.initialize(this);

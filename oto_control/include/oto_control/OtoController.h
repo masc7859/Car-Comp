@@ -116,12 +116,15 @@ class OtoController {
         double vel_est;
         float t_prev;
         double distance_plant_left, distance_plant_right;
+        int filter_ir_count;
+        vector<double> ir_count_vec;
 
         std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
                           motor_plant_msg, motor_effort_msg, motor_setpoint_msg;
 
         OtoController();
         ~OtoController();
+        void filter_ir(double distance_plant_comb);
         double get_rate_hz();
         bool initialize();
         void sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg);
