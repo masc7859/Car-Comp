@@ -10,6 +10,7 @@
 #include <angles/angles.h>
 #include <string>
 #include <std_msgs/Float64.h>
+#include <std_msgs/String.h>
 #include <sensor_msgs/Imu.h>
 #include <geometry_msgs/Vector3Stamped.h>
 
@@ -61,6 +62,8 @@ class OtoController {
         ros::Publisher motor_plant_pub;
         ros::Publisher motor_setpoint_pub;
         ros::Subscriber motor_effort_sub;
+
+        ros::Publisher debug_pub;
 
         ros::Subscriber imu_orientation_sub;
         //ros::Rate rate;
@@ -121,6 +124,7 @@ class OtoController {
 
         std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
                           motor_plant_msg, motor_effort_msg, motor_setpoint_msg;
+        std_msgs::String debug_msg;
 
         OtoController();
         ~OtoController();

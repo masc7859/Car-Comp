@@ -29,9 +29,11 @@ bool OtoController::TurnState::initialize(OtoController* controller){
 }
 
 void OtoController::TurnState::turn(){
-	init_yaw = parent_controller->turn_init_yaw;
-    final_yaw = parent_controller->turn_init_yaw - deg_to_rad(80);	//this parameter is the rough angle to track the imu through
-	sensor_interpret();
+     parent_controller->debug_msg.data = "in turn";
+     parent_controller->debug_pub.publish(parent_controller->debug_msg);
+	   init_yaw = parent_controller->turn_init_yaw;
+     final_yaw = parent_controller->turn_init_yaw - deg_to_rad(80);	//this parameter is the rough angle to track the imu through
+	   sensor_interpret();
 }
 
 void OtoController::TurnState::sensor_interpret(){

@@ -127,6 +127,8 @@ bool OtoController::initialize() {
     //imu
     imu_orientation_sub = n.subscribe("imu/data", 1, &OtoController::imu_callback, this);
 
+    debug_pub = n.advertise<std_msgs::String>("oto_control/debug", 1);
+
     //set speed(aceleration) and acceleration(jerk)
     motor_command.joint_name = "steering";
     motor_command.position = 0;
