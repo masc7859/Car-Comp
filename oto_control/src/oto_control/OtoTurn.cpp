@@ -36,7 +36,7 @@ void OtoController::TurnState::turn(){
 }
 
 void OtoController::TurnState::sensor_interpret(){
-	if ((parent_controller->distance_plant_f > infinity_threshold) || (parent_controller->distance_plant_f > infinity_threshold)){
+	if (parent_controller->distance_plant_left > infinity_threshold){
 		//this is the case where we are reading INF on one of the sensors
 		motor_command.joint_name = "steering";
 		motor_command.position = deg_to_rad(-14);//slower when needed
