@@ -21,10 +21,12 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
     distance_plant_left = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
     distance_plant_right = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
-    if(distance_plant_right != 0.0) {
-        steering_plant_msg.data = distance_plant_right - distance_plant_left;
-        steering_plant_pub.publish(steering_plant_msg);
-        ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
+    if(distance_plant_right != 0.0 ) {
+        steering_plant_msg.data = distance_plant_left - distance_plant_right;
+        if(!isnan(steering_plant_msg.data)){
+            steering_plant_pub.publish(steering_plant_msg);
+            ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
+        }
     }
 }
 
