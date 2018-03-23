@@ -18,16 +18,14 @@ OtoController::~OtoController() {
 }
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
-    distance_plant_f = (pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18) - 1; //sqrt(2.0)/2.0
-    distance_plant_r = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+    distance_plant_left = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+    distance_plant_right = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
-    if(distance_plant_r != 0.0) {
-        steering_plant_msg.data = distance_plant_r;
+    if(distance_plant_right != 0.0) {
+        steering_plant_msg.data = distance_plant_right - distance_plant_left;
         steering_plant_pub.publish(steering_plant_msg);
         ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
     }
-    //ROS_INFO("Publishing steering plant_r: %lf", distance_plant_r);
-    //ROS_INFO("Publishing steering plant_f: %lf", distance_plant_f);
 }
 
 void OtoController::motor_state_callback(const oto_control::MotorStateList::ConstPtr& msg) {
@@ -127,8 +125,8 @@ bool OtoController::initialize() {
     //this->publish_motor_command(motor_command);
 
     //setup configuration
-    cfg.cruise_setpoint = 150.0;
-    cfg.min_turn_distance = 250.0;
+    cfg.cruise_setpoint = 0.0;
+    cfg.min_turn_distance = 550.0;
 
     cruiser.initialize(this);
     turner.initialize(this);

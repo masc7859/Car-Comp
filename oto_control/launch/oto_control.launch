@@ -41,7 +41,7 @@
 	      <param name="pololu_sensors_yaml" value="$(find ros_pololu_servo)/launch/pololu_sensors.yaml" />
         <param name="port_name" value="/dev/ttyACM0" />
         <param name="baud_rate" value="115200" />
-        <param name="rate_hz" value="10" />
+        <param name="rate_hz" value="20" />
         <param name="daisy_chain" value="false" />
     </node>
 

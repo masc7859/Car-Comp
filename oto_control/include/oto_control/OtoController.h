@@ -115,7 +115,7 @@ class OtoController {
         double x_accel, y_accel; //in m/s
         double vel_est;
         float t_prev;
-        double distance_plant_f, distance_plant_r;
+        double distance_plant_left, distance_plant_right;
 
         std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
                           motor_plant_msg, motor_effort_msg, motor_setpoint_msg;

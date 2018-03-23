@@ -15,7 +15,7 @@ OtoController::CruiseState::CruiseState()
 }
 
 void OtoController::CruiseState::cruise(){
-    //sensor_interpret();
+    sensor_interpret();
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();
 
@@ -40,24 +40,10 @@ void OtoController::CruiseState::decide_vel(){
 void OtoController::CruiseState::sensor_interpret(){
     double distance_plant_comb;
 
-    ROS_INFO("actual distance (front): %lf", parent_controller->distance_plant_f);
-    ROS_INFO("actual distance (rear): %lf", parent_controller->distance_plant_r);
+    ROS_INFO("actual distance (left): %lf", parent_controller->distance_plant_left);
+    ROS_INFO("actual distance (right): %lf", parent_controller->distance_plant_right);
 
-    //we want plant_f - plant_r = 0, thats our cruise condition
-
-    if(parent_controller->distance_plant_f >= parent_controller->cfg.min_turn_distance){
-        if(turn_flag){
-            turn_flag_confidence = max(turn_flag_confidence,
-                (parent_controller->distance_plant_f - parent_controller->cfg.min_turn_distance) / (550.0 - parent_controller->cfg.min_turn_distance));
-        }
-        else{
-            turn_flag = true;
-            turn_flag_confidence = (parent_controller->distance_plant_f - parent_controller->cfg.min_turn_distance) / (550 - parent_controller->cfg.min_turn_distance);
-        }
-    }
-
-    if(parent_controller->distance_plant_r >= parent_controller->cfg.min_turn_distance){
-
+    if(parent_controller->distance_plant_left >= parent_controller->cfg.min_turn_distance){
         //cant turn immediately, need some way of telling for sure
         parent_controller->turn_init_yaw = parent_controller->yaw;
         parent_controller->state = TURN;
