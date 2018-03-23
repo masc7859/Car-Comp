@@ -45,7 +45,7 @@ void OtoController::CruiseState::sensor_interpret(){
 
     if(parent_controller->distance_plant_left >= parent_controller->cfg.min_turn_distance){
         //cant turn immediately, need some way of telling for sure
-        parent_controller->turn_init_yaw = parent_controller->yaw;
+        parent_controller->turn_init_yaw = parent_co59ntroller->yaw;
         parent_controller->state = TURN;
 	}
 

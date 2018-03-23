@@ -21,8 +21,8 @@ bool OtoController::TurnState::initialize(OtoController* controller){
     final_yaw = parent_controller->yaw - (M_PI / 2);
 
 	infinity_threshold = parent_controller->cfg.min_turn_distance; //really just a value to not do math with absurdly large sensor data
-	parallel_threshold = 10; //10 cm for now, replace once testing done
 
+		parallel_threshold = 10; //10 cm for now, replace once testing done
     bool success = true;
     ROS_INFO("Initialized Turn State");
     return success;
@@ -35,6 +35,17 @@ void OtoController::TurnState::turn(){
 }
 
 void OtoController::TurnState::sensor_interpret(){
+	if (parent_controller->distance_plant_left > infinity_threshold){
+		//this is the case where we are reading INF on one of the sensors
+		motor_command.joint_name = "steering";
+		motor_command.position = deg_to_rad(-14);//slower when needed
+		parent_controller->publish_motor_command(motor_command);
+	}
+	else{
+		//set state back to cruise
+		parent_controller->state = CRUISE;
+	}
+	/*
 	//check imu for a rough estimate of our progress through turn
 	if (parent_controller->yaw <= final_yaw){
 
@@ -67,6 +78,7 @@ void OtoController::TurnState::sensor_interpret(){
 		motor_command.position = deg_to_rad(-14);//default case is "perfect turn"
 		parent_controller->publish_motor_command(motor_command);
 	}
+	*/
 
 }
 

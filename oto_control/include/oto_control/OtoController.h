@@ -93,7 +93,7 @@ class OtoController {
             public:
               double init_yaw;
               double final_yaw;
-		      double infinity_threshold, parallel_threshold;
+		          double infinity_threshold, parallel_threshold;
               double steering_plant, motor_plant;
               OtoController* parent_controller;
               oto_control::MotorCommand motor_command;
