@@ -62,12 +62,12 @@
         <param name="pid_enable_topic" value="steering_pid_enable" />
     </node>
 
-
+<!--
     <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot"
       args="/steering_effort/data /steering_plant/data /steering_setpoint/data" />
 
     <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
-
+-->
 
     <!-- motor pid -->
     <node name="speed" pkg="pid" type="controller" output="screen" >

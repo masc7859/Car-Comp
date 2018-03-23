@@ -32,7 +32,7 @@ void OtoController::CruiseState::decide_yaw(){ //bad name, change
 void OtoController::CruiseState::decide_vel(){
     //set motor_setpoint based on confidence
     motor_command.joint_name = "drive";
-    motor_command.position = MAX_SPEED_PW_F * 0.28;
+    motor_command.position = MAX_SPEED_PW_F * 0.30;
     parent_controller->publish_motor_command(motor_command);
 
 }
