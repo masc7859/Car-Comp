@@ -31,5 +31,6 @@
   </node>
   -->
   <node pkg="oto_control" type="camera_node" name="camera_node" output="screen">
+      <param name="rate" value="10.0" />
   </node>
 </launch>

@@ -13,11 +13,11 @@ int main(int argc,char**argv)
         ROS_INFO("Successfully initialized camera_node");
     }
 
-    ros::Rate rate(10.0);
+    ros::Rate rate(controller.rate);
     usleep(1000*1000);
 
 	  while(ros::ok()) {
-      //do something
+      controller.PublishImage();
 
 	    ros::spinOnce();
       rate.sleep();

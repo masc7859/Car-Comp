@@ -11,15 +11,23 @@
 #include <camera/withrobot_camera.hpp>
 #include <camera/withrobot_utility.hpp>
 
-using namespace std;
-
 class CameraController{
     private:
         ros::NodeHandle n;
-        const char* devPath = "/dev/video1";
+        ros::Publisher ImgPub;
+        Withrobot::camera_format camFormat;
+        const char* devPath;
+        int frame_count;
+        std::string cam_name;
+
     public:
-        CameraController();
+        Withrobot::Camera camera;
+        double rate;
+
+
+        CameraController(): camera("/dev/video1"){};
         ~CameraController();
         bool Initialize();
+        bool PublishImage();
 
 };
