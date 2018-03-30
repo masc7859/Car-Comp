@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(oto_control)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -17,7 +17,13 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib
   actionlib_msgs
   genmsg
+  image_transport
+  cv_bridge
+  sensor_msgs
+  camera_info_manager
 )
+
+find_package(OpenCV REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -116,9 +122,9 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES oto_control
+  LIBRARIES oto_control camera
   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime actionlib_msgs ros_pololu_servo
-  DEPENDS system_lib
+  DEPENDS system_lib opencv
 )
 
 ###########
@@ -129,6 +135,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
   include
 )
 
@@ -140,6 +147,12 @@ add_library(oto_control
    src/oto_control/OtoCruise.cpp
    src/oto_control/OtoTurn.cpp
    src/oto_control/helper_fun.cpp
+ )
+
+add_library(camera
+   src/camera/Camera.cpp
+   src/camera/withrobot_camera.cpp
+   src/camera/withrobot_utility.cpp
  )
 
 ## Add cmake target dependencies of the library
@@ -154,10 +167,20 @@ target_link_libraries(oto_control
    yaml-cpp
  )
 
+target_link_libraries(camera
+   ${catkin_LIBRARIES}
+   ${OpenCV_LIBS}
+   yaml-cpp
+   -lv4l2 
+   -ludev
+ )
+
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(oto_control_node src/oto_controller_node.cpp)
+
+add_executable(camera_node src/camera_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -171,10 +194,18 @@ add_executable(oto_control_node src/oto_controller_node.cpp)
 add_dependencies(oto_control oto_control_generate_messages_cpp)
 add_dependencies(oto_control ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
+add_dependencies(camera oto_control_generate_messages_cpp)
+add_dependencies(camera ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+
 ## Specify libraries to link a library or executable target against
 target_link_libraries(oto_control_node
    ${catkin_LIBRARIES}
    oto_control
+)
+
+target_link_libraries(camera_node
+   ${catkin_LIBRARIES}
+   camera
 )
 
 #############
