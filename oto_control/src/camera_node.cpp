@@ -7,10 +7,10 @@ int main(int argc,char**argv)
     CameraController controller;
 
     if(!controller.Initialize()) {
-        ROS_INFO("Failed to initialize camera_node");
+        ROS_INFO("Failed to initialize camera_control_node");
         return EXIT_FAILURE;
     }else {
-        ROS_INFO("Successfully initialized camera_node");
+        ROS_INFO("Successfully initialized camera_control_node");
     }
 
     ros::Rate rate(controller.rate);
@@ -22,7 +22,7 @@ int main(int argc,char**argv)
 	    ros::spinOnce();
       rate.sleep();
     }
-	ROS_INFO("Exited camera_node");
+	ROS_INFO("Exited camera_control_node");
 
 	return EXIT_SUCCESS;
 }

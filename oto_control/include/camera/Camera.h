@@ -23,6 +23,8 @@ class CameraController{
     public:
         Withrobot::Camera camera;
         double rate;
+        int exposure;
+        int brightness;
 
 
         CameraController(): camera("/dev/video1"){};

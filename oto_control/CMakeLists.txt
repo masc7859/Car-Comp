@@ -180,7 +180,7 @@ target_link_libraries(camera
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(oto_control_node src/oto_controller_node.cpp)
 
-add_executable(camera_node src/camera_node.cpp)
+add_executable(camera_control_node src/camera_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -203,7 +203,7 @@ target_link_libraries(oto_control_node
    oto_control
 )
 
-target_link_libraries(camera_node
+target_link_libraries(camera_control_node
    ${catkin_LIBRARIES}
    camera
 )

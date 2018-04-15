@@ -13,6 +13,8 @@ bool CameraController::Initialize(){
     ImgPub = n.advertise<sensor_msgs::Image>("oto_control/image",1);
 
     np.getParam("rate", rate);
+    np.getParam("exposure", exposure);
+    np.getParam("brightness", brightness);
 
     /* USB 3.0 */
     /* 8-bit Greyscale 1280 x 720 60 fps */
@@ -52,10 +54,8 @@ bool CameraController::Initialize(){
     //ROS_INFO("----------------- Current format informations -----------------\n");
     //camFormat.print();
 
-    int brightness = camera.get_control("Brightness");
-    int exposure = camera.get_control("Exposure (Absolute)");
-    exposure = 44;
-    brightness = 126;
+    //int brightness = camera.get_control("Brightness");
+    //int exposure = camera.get_control("Exposure (Absolute)");
 
     camera.set_control("Brightness", brightness);
     camera.set_control("Exposure (Absolute)", exposure);
