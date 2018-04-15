@@ -1,0 +1,6 @@
+<!-- Launch in the camera namespace containing "image_raw" and "camera_info" -->
+<launch>
+
+  <node pkg="image_proc" type="image_proc" name="image_proc" ns="camera"/>
+
+</launch>
