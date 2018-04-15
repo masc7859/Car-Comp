@@ -10,7 +10,7 @@ bool CameraController::Initialize(){
     devPath = "/dev/video1";
     frame_count = 0;
 
-    ImgPub = n.advertise<sensor_msgs::Image>("oto_control/image",1);
+    //ImgPub = n.advertise<sensor_msgs::Image>("oto_control/image",1);
 
     np.getParam("rate", rate);
     np.getParam("exposure", exposure);

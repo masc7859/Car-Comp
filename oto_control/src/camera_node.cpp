@@ -16,12 +16,12 @@ int main(int argc,char**argv)
     ros::Rate rate(controller.rate);
     usleep(1000*1000);
 
-	  while(ros::ok()) {
-      controller.PublishImage();
+	  //while(ros::ok()) {
+      //controller.PublishImage();
 
-	    ros::spinOnce();
-      rate.sleep();
-    }
+	    //ros::spinOnce();
+      //rate.sleep();
+    //}
 	ROS_INFO("Exited camera_control_node");
 
 	return EXIT_SUCCESS;

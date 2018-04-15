@@ -13,6 +13,11 @@
 #include <std_msgs/String.h>
 #include <sensor_msgs/Imu.h>
 #include <geometry_msgs/Vector3Stamped.h>
+#include <sensor_msgs/PointCloud.h>
+#include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/Point32.h>
+#include <tf/transform_datatypes.h>
+#include <tf/transform_broadcaster.h>
 
 using namespace std;
 
@@ -66,7 +71,8 @@ class OtoController {
         ros::Publisher debug_pub;
 
         ros::Subscriber imu_orientation_sub;
-        //ros::Rate rate;
+
+        ros::Subscriber vi_slam_pose_sub;
 
         int rate_hz;
 
@@ -136,6 +142,7 @@ class OtoController {
         void publish_motor_command(oto_control::MotorCommand motor_command);
         void steering_effort_callback(const std_msgs::Float64::ConstPtr& msg);
         void motor_effort_callback(const std_msgs::Float64::ConstPtr& msg);
+        void vi_slam_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg);
         void imu_callback(const ImuMsg::ConstPtr& imu_msg);
         void publish_steering_setpoint();
         void publish_steering_plant();

@@ -4,9 +4,9 @@
 #include <math.h>
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
+#include <vector>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
-#include <vector>
 
 using namespace std;
 
@@ -83,6 +83,21 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
 
 }
 
+void OtoController::vi_slam_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg){
+  double q0,q1,q2,q3;
+  double x,y,z,roll,pitch,yaw;
+
+  q0 = msg->pose.orientation.x;
+  q1 = msg->pose.orientation.y;
+  q2 = msg->pose.orientation.z;
+  q3 = msg->pose.orientation.w;
+  tf2::Matrix3x3(tf2::Quaternion(q0,q1,q2,q3)).getRPY(roll, pitch, yaw);
+
+  x = msg->pose.position.x;
+  y = msg->pose.position.y;
+  z = msg->pose.position.z;
+}
+
 void OtoController::publish_motor_command(oto_control::MotorCommand motor_command) {
     motor_pub.publish(motor_command);
 }
@@ -127,6 +142,10 @@ bool OtoController::initialize() {
     //imu
     imu_orientation_sub = n.subscribe("imu/data", 1, &OtoController::imu_callback, this);
 
+    //vi_slam
+    vi_slam_pose_sub = n.subscribe("slam/pos", 1, &OtoController::vi_slam_pose_callback, this);
+
+    //debugging broadcast
     debug_pub = n.advertise<std_msgs::String>("oto_control/debug", 1);
 
     //set speed(aceleration) and acceleration(jerk)
