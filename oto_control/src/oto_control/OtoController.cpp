@@ -23,7 +23,7 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
 
 
     distance_plant_front = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
-    distance_plant_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1.8;
+    distance_plant_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
     //merge sensor data with imu
     distance_plant_comb = cfg.min_turn_distance - (distance_plant_front + distance_plant_rear)/2.;
@@ -41,7 +41,7 @@ void OtoController::filter_ir(double distance_plant_comb) {
       steering_plant_msg.data = steering_plant;
       if(!isnan(steering_plant_msg.data)){
       	steering_plant_pub.publish(steering_plant_msg);
-      	ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
+      	//ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
       }
       ir_count_vec.clear();
       ir_count_vec.push_back(distance_plant_comb);
