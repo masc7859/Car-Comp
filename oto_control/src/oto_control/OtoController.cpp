@@ -27,7 +27,7 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
 
     //merge sensor data with imu
     distance_plant_comb = cfg.min_turn_distance - (distance_plant_front + distance_plant_rear)/2.;
-    debug_msg.data = "distance_away from cruising: %lf", distance_plant_comb;
+    debug_msg.data = "distance_away from cruising:" + to_string(distance_plant_comb);
     debug_pub.publish(debug_msg);
 
     filter_ir(distance_plant_comb);

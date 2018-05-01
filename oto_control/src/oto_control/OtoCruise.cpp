@@ -42,9 +42,9 @@ void OtoController::CruiseState::decide_vel(){
 }
 
 void OtoController::CruiseState::sensor_interpret(){
-    parent_controller->debug_msg.data = "actual distance (front): %lf", parent_controller->distance_plant_front;
+    parent_controller->debug_msg.data = "actual distance (front): " + to_string(parent_controller->distance_plant_front);
     parent_controller->debug_pub.publish(parent_controller->debug_msg);
-    parent_controller->debug_msg.data = "actual distance (rear): %lf", parent_controller->distance_plant_rear;
+    parent_controller->debug_msg.data = "actual distance (rear): " + to_string(parent_controller->distance_plant_rear);
     parent_controller->debug_pub.publish(parent_controller->debug_msg);
     //debug_pub.publish("actual distance (front): %lf", parent_controller->distance_plant_front);
     //debug_pub.publish("actual distance (rear): %lf", parent_controller->distance_plant_rear);
