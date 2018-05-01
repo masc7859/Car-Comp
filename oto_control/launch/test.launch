@@ -32,7 +32,7 @@
   -->
   <node pkg="oto_control" type="camera_control_node" name="camera_control_node" output="screen">
       <param name="rate" value="50.0" />
-      <param name="exposure" value="60" />
-      <param name="brightness" value="80" />
+      <param name="exposure" value="56" />
+      <param name="brightness" value="75" />
   </node>
 </launch>

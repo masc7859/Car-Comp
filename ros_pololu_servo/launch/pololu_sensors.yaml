@@ -2,11 +2,10 @@
 
 ir_f:
   pololu_id: 1
-  sensor_id: 5
+  sensor_id: 11
   voltage: 0
 
 ir_r:
   pololu_id: 1
   sensor_id: 0
   voltage: 0
-

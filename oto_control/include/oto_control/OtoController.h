@@ -124,7 +124,7 @@ class OtoController {
         double x_accel, y_accel; //in m/s
         double vel_est;
         float t_prev;
-        double distance_plant_left, distance_plant_right;
+        double distance_plant_front, distance_plant_rear, steering_plant;
         int filter_ir_count;
         vector<double> ir_count_vec;
 

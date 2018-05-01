@@ -20,21 +20,25 @@ OtoController::~OtoController() {
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
     double distance_plant_comb;
-    distance_plant_left = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
-    distance_plant_right = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
-    distance_plant_comb = distance_plant_left - distance_plant_right;
+
+    distance_plant_front = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+    distance_plant_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1.8;
+
+    //merge sensor data with imu
+    distance_plant_comb = cfg.min_turn_distance - (distance_plant_front - distance_plant_rear);
 
     filter_ir(distance_plant_comb);
 }
 
 void OtoController::filter_ir(double distance_plant_comb) {
-    if(ir_count_vec.size() != 5.) {
+    if(ir_count_vec.size() != 10) {
       ir_count_vec.push_back(distance_plant_comb);
     }
     else {
       sort(ir_count_vec.begin(), ir_count_vec.end());
-      steering_plant_msg.data = ir_count_vec[2];
+      steering_plant = ir_count_vec[(ir_count_vec.size()/2)-1];
+      steering_plant_msg.data = steering_plant;
       if(!isnan(steering_plant_msg.data)){
       	steering_plant_pub.publish(steering_plant_msg);
       	ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
@@ -72,13 +76,13 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
 
     tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(roll, pitch, yaw);
     ROS_INFO("yaw: %lf", yaw);
-    ROS_INFO("x accel: %lf", x_accel);
+    ROS_INFO("forward/reverse accel: %lf", y_accel);
 
     t = ros::Time::now().toSec();
     t_interval = t - t_prev;
     t_prev = t;
 
-    vel_est = vel_est + x_accel * t_interval;
+    vel_est = vel_est + y_accel * t_interval;
     ROS_INFO("Vel Estimate: %lf", vel_est);
 
 }
@@ -162,8 +166,8 @@ bool OtoController::initialize() {
     //this->publish_motor_command(motor_command);
 
     //setup configuration
-    cfg.cruise_setpoint = 0.0;
-    cfg.min_turn_distance = 600.0;
+    cfg.cruise_setpoint = 150.0;
+    cfg.min_turn_distance = 750.0;
     filter_ir_count = 0;
     vector<double> ir_count_vec;
 
@@ -180,6 +184,6 @@ bool OtoController::initialize() {
 
 double OtoController::get_rate_hz() {
     //get this from params
-    double rate_hz = 20.0;
+    double rate_hz = 50.0;
     return rate_hz;
 }

@@ -181,6 +181,19 @@ Stereo/fast:
 .PHONY : Stereo/fast
 
 #=============================================================================
+# Target rules for targets named download_extra_data
+
+# Build rule for target.
+download_extra_data: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 download_extra_data
+.PHONY : download_extra_data
+
+# fast build rule for target.
+download_extra_data/fast:
+	$(MAKE) -f CMakeFiles/download_extra_data.dir/build.make CMakeFiles/download_extra_data.dir/build
+.PHONY : download_extra_data/fast
+
+#=============================================================================
 # Target rules for targets named test-results-run
 
 # Build rule for target.
@@ -192,6 +205,19 @@ test-results-run: cmake_check_build_system
 test-results-run/fast:
 	$(MAKE) -f CMakeFiles/test-results-run.dir/build.make CMakeFiles/test-results-run.dir/build
 .PHONY : test-results-run/fast
+
+#=============================================================================
+# Target rules for targets named tests
+
+# Build rule for target.
+tests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tests
+.PHONY : tests
+
+# fast build rule for target.
+tests/fast:
+	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
+.PHONY : tests/fast
 
 #=============================================================================
 # Target rules for targets named rosbuild_clean-test-results
@@ -220,6 +246,19 @@ ROSBUILD_gensrv_cpp/fast:
 .PHONY : ROSBUILD_gensrv_cpp/fast
 
 #=============================================================================
+# Target rules for targets named rospack_genmsg
+
+# Build rule for target.
+rospack_genmsg: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rospack_genmsg
+.PHONY : rospack_genmsg
+
+# fast build rule for target.
+rospack_genmsg/fast:
+	$(MAKE) -f CMakeFiles/rospack_genmsg.dir/build.make CMakeFiles/rospack_genmsg.dir/build
+.PHONY : rospack_genmsg/fast
+
+#=============================================================================
 # Target rules for targets named test
 
 # Build rule for target.
@@ -246,43 +285,17 @@ ROSBUILD_gensrv_lisp/fast:
 .PHONY : ROSBUILD_gensrv_lisp/fast
 
 #=============================================================================
-# Target rules for targets named _catkin_empty_exported_target
+# Target rules for targets named rospack_genmsg_libexe
 
 # Build rule for target.
-_catkin_empty_exported_target: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _catkin_empty_exported_target
-.PHONY : _catkin_empty_exported_target
+rospack_genmsg_libexe: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rospack_genmsg_libexe
+.PHONY : rospack_genmsg_libexe
 
 # fast build rule for target.
-_catkin_empty_exported_target/fast:
-	$(MAKE) -f CMakeFiles/_catkin_empty_exported_target.dir/build.make CMakeFiles/_catkin_empty_exported_target.dir/build
-.PHONY : _catkin_empty_exported_target/fast
-
-#=============================================================================
-# Target rules for targets named tests
-
-# Build rule for target.
-tests: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tests
-.PHONY : tests
-
-# fast build rule for target.
-tests/fast:
-	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
-.PHONY : tests/fast
-
-#=============================================================================
-# Target rules for targets named download_extra_data
-
-# Build rule for target.
-download_extra_data: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 download_extra_data
-.PHONY : download_extra_data
-
-# fast build rule for target.
-download_extra_data/fast:
-	$(MAKE) -f CMakeFiles/download_extra_data.dir/build.make CMakeFiles/download_extra_data.dir/build
-.PHONY : download_extra_data/fast
+rospack_genmsg_libexe/fast:
+	$(MAKE) -f CMakeFiles/rospack_genmsg_libexe.dir/build.make CMakeFiles/rospack_genmsg_libexe.dir/build
+.PHONY : rospack_genmsg_libexe/fast
 
 #=============================================================================
 # Target rules for targets named doxygen
@@ -298,19 +311,6 @@ doxygen/fast:
 .PHONY : doxygen/fast
 
 #=============================================================================
-# Target rules for targets named rosbuild_precompile
-
-# Build rule for target.
-rosbuild_precompile: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosbuild_precompile
-.PHONY : rosbuild_precompile
-
-# fast build rule for target.
-rosbuild_precompile/fast:
-	$(MAKE) -f CMakeFiles/rosbuild_precompile.dir/build.make CMakeFiles/rosbuild_precompile.dir/build
-.PHONY : rosbuild_precompile/fast
-
-#=============================================================================
 # Target rules for targets named test-results
 
 # Build rule for target.
@@ -322,6 +322,19 @@ test-results: cmake_check_build_system
 test-results/fast:
 	$(MAKE) -f CMakeFiles/test-results.dir/build.make CMakeFiles/test-results.dir/build
 .PHONY : test-results/fast
+
+#=============================================================================
+# Target rules for targets named rosbuild_precompile
+
+# Build rule for target.
+rosbuild_precompile: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosbuild_precompile
+.PHONY : rosbuild_precompile
+
+# fast build rule for target.
+rosbuild_precompile/fast:
+	$(MAKE) -f CMakeFiles/rosbuild_precompile.dir/build.make CMakeFiles/rosbuild_precompile.dir/build
+.PHONY : rosbuild_precompile/fast
 
 #=============================================================================
 # Target rules for targets named run_tests
@@ -350,30 +363,17 @@ clean_test_results/fast:
 .PHONY : clean_test_results/fast
 
 #=============================================================================
-# Target rules for targets named rospack_genmsg
+# Target rules for targets named _catkin_empty_exported_target
 
 # Build rule for target.
-rospack_genmsg: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rospack_genmsg
-.PHONY : rospack_genmsg
+_catkin_empty_exported_target: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _catkin_empty_exported_target
+.PHONY : _catkin_empty_exported_target
 
 # fast build rule for target.
-rospack_genmsg/fast:
-	$(MAKE) -f CMakeFiles/rospack_genmsg.dir/build.make CMakeFiles/rospack_genmsg.dir/build
-.PHONY : rospack_genmsg/fast
-
-#=============================================================================
-# Target rules for targets named rospack_genmsg_libexe
-
-# Build rule for target.
-rospack_genmsg_libexe: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rospack_genmsg_libexe
-.PHONY : rospack_genmsg_libexe
-
-# fast build rule for target.
-rospack_genmsg_libexe/fast:
-	$(MAKE) -f CMakeFiles/rospack_genmsg_libexe.dir/build.make CMakeFiles/rospack_genmsg_libexe.dir/build
-.PHONY : rospack_genmsg_libexe/fast
+_catkin_empty_exported_target/fast:
+	$(MAKE) -f CMakeFiles/_catkin_empty_exported_target.dir/build.make CMakeFiles/_catkin_empty_exported_target.dir/build
+.PHONY : _catkin_empty_exported_target/fast
 
 #=============================================================================
 # Target rules for targets named rosbuild_premsgsrvgen
@@ -666,22 +666,22 @@ help:
 	@echo "... install/strip"
 	@echo "... RGBD"
 	@echo "... Stereo"
+	@echo "... download_extra_data"
 	@echo "... test-results-run"
+	@echo "... tests"
 	@echo "... rosbuild_clean-test-results"
 	@echo "... ROSBUILD_gensrv_cpp"
+	@echo "... rospack_genmsg"
 	@echo "... test"
 	@echo "... ROSBUILD_gensrv_lisp"
-	@echo "... install/local"
-	@echo "... _catkin_empty_exported_target"
-	@echo "... tests"
-	@echo "... download_extra_data"
+	@echo "... rospack_genmsg_libexe"
 	@echo "... doxygen"
-	@echo "... rosbuild_precompile"
 	@echo "... test-results"
+	@echo "... rosbuild_precompile"
 	@echo "... run_tests"
 	@echo "... clean_test_results"
-	@echo "... rospack_genmsg"
-	@echo "... rospack_genmsg_libexe"
+	@echo "... install/local"
+	@echo "... _catkin_empty_exported_target"
 	@echo "... rosbuild_premsgsrvgen"
 	@echo "... ROSBUILD_genmsg_lisp"
 	@echo "... ROSBUILD_genmsg_cpp"

@@ -42,12 +42,10 @@ void OtoController::CruiseState::decide_vel(){
 }
 
 void OtoController::CruiseState::sensor_interpret(){
-    double distance_plant_comb;
+    ROS_INFO("actual distance (front): %lf", parent_controller->distance_plant_front);
+    ROS_INFO("actual distance (rear): %lf", parent_controller->distance_plant_rear);
 
-    ROS_INFO("actual distance (left): %lf", parent_controller->distance_plant_left);
-    ROS_INFO("actual distance (right): %lf", parent_controller->distance_plant_right);
-
-    if(parent_controller->distance_plant_left >= parent_controller->cfg.min_turn_distance){
+    if(parent_controller->steering_plant >= parent_controller->cfg.min_turn_distance){
         //cant turn immediately, need some way of telling for sure
         parent_controller->turn_init_yaw = parent_controller->yaw;
         parent_controller->state = TURN;

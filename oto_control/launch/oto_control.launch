@@ -2,6 +2,7 @@
     <node pkg="nodelet" type="nodelet" name="imu_manager"
         args="manager" output="screen" />
 
+    <!-- IMU Driver -->
     <node pkg="nodelet" type="nodelet" name="PhidgetsImuNodelet"
     	  args="load phidgets_imu/PhidgetsImuNodelet imu_manager"
 	      output="screen">
@@ -30,9 +31,9 @@
     	  <param name="do_bias_estimation" value="true"/>
     	  <param name="do_adaptive_gain" value="true"/>
     	  <param name="use_mag" value="true"/>
-    	  <param name="gain_acc" value="0.01"/>
-    	  <param name="gain_mag" value="0.01"/>
-	  <param name="gain" value=".01"/>
+    	  <param name="gain_acc" value="0.1"/>
+    	  <param name="gain_mag" value="0.1"/>
+	      <!-- <param name="gain" value=".01"/> -->
     </node>
 
     <!-- pololu servo controller node -->
