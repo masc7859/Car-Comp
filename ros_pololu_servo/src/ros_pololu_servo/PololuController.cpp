@@ -99,7 +99,7 @@ bool PololuController::initialize()
 
 bool PololuController::motor_range_callback(MotorRange::Request &req, MotorRange::Response &res)
 {
-    ROS_INFO("Recevied motor_range_callback for motor: %s", req.motor_name.c_str());
+    //ROS_INFO("Recevied motor_range_callback for motor: %s", req.motor_name.c_str());
     map<string, Motor>::iterator iterator = motors.find(req.motor_name);
 
     if(iterator != motors.end())
@@ -217,7 +217,7 @@ Motor PololuController::default_motor(){
 
 void PololuController::motor_command_callback(const MotorCommand::ConstPtr& msg)
 {
-    ROS_INFO("Recevied cmd name: %s, position: %f, speed: %f, accel: %f", msg->joint_name.c_str(), to_degrees(msg->position), msg->speed, msg->acceleration);
+    //ROS_INFO("Recevied cmd name: %s, position: %f, speed: %f, accel: %f", msg->joint_name.c_str(), to_degrees(msg->position), msg->speed, msg->acceleration);
 
     map<string, Motor>::iterator iterator = motors.find(msg->joint_name);
     // Allow to send commands to named and unnamed motors
@@ -283,14 +283,14 @@ void PololuController::motor_command_callback(const MotorCommand::ConstPtr& msg)
                 serial_interface->setSpeedPP(motor.pololu_id, motor.motor_id, speed);
                 serial_interface->setAccelerationPP(motor.pololu_id, motor.motor_id, acceleration);
                 serial_interface->setTargetPP(motor.pololu_id, motor.motor_id, (int)pulse_m);
-                ROS_INFO("id: %d/%d, pulse:  %f, pos: %f, speed: %f, accel: %f", motor.pololu_id, motor.motor_id, pulse_m, msg->position, speed, acceleration);
+                //ROS_INFO("id: %d/%d, pulse:  %f, pos: %f, speed: %f, accel: %f", motor.pololu_id, motor.motor_id, pulse_m, msg->position, speed, acceleration);
             }
             else
             {
                 serial_interface->setSpeedCP(motor.motor_id, speed);
                 serial_interface->setAccelerationCP(motor.motor_id, acceleration);
                 serial_interface->setTargetCP(motor.motor_id, (int)pulse_m);
-                ROS_INFO("id: %d, pulse:  %f, pos: %f, speed: %f, accel: %f", motor.motor_id, pulse_m, msg->position, speed, acceleration);
+                //ROS_INFO("id: %d, pulse:  %f, pos: %f, speed: %f, accel: %f", motor.motor_id, pulse_m, msg->position, speed, acceleration);
             }
         }
     }

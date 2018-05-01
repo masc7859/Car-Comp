@@ -26,7 +26,7 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
     distance_plant_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
     //merge sensor data with imu
-    distance_plant_comb = cfg.cruise_setpoint - (distance_plant_front + distance_plant_rear)/2.;
+    distance_plant_comb = (distance_plant_front + distance_plant_rear)/2.;
     debug_msg.data = "distance_away from cruising:" + to_string(distance_plant_comb);
     debug_pub.publish(debug_msg);
 
@@ -43,7 +43,7 @@ void OtoController::filter_ir(double distance_plant_comb) {
       steering_plant_msg.data = steering_plant;
       if(!isnan(steering_plant_msg.data)){
       	steering_plant_pub.publish(steering_plant_msg);
-      	//ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
+      	ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
       }
       ir_count_vec.clear();
       ir_count_vec.push_back(distance_plant_comb);
@@ -61,7 +61,7 @@ void OtoController::motor_state_callback(const oto_control::MotorStateList::Cons
     latest_motor_state[STEERING].pulse = msg->motor_states[STEERING].pulse;
     latest_motor_state[STEERING].radians = msg->motor_states[STEERING].radians;
     latest_motor_state[STEERING].degrees = msg->motor_states[STEERING].degrees;
-    ROS_INFO("Steering state callback radians:%lf",latest_motor_state[STEERING].radians);
+    //ROS_INFO("Steering state callback radians:%lf",latest_motor_state[STEERING].radians);
 }
 
 void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
@@ -77,14 +77,14 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
     y_accel = imu_msg->linear_acceleration.y;
 
     tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(roll, pitch, yaw);
-    ROS_INFO("yaw: %lf", yaw);
-    ROS_INFO("forward/reverse accel: %lf", y_accel);
+    //ROS_INFO("yaw: %lf", yaw);
+    //ROS_INFO("forward/reverse accel: %lf", y_accel);
 
     t = ros::Time::now().toSec();
     t_interval = t - t_prev;
     t_prev = t;
 
-    vel_est = vel_est + y_accel * t_interval;
+    vel_est = vel_est + x_accel * t_interval;
     ROS_INFO("Vel Estimate: %lf", vel_est);
 
 }
@@ -110,12 +110,12 @@ void OtoController::publish_motor_command(oto_control::MotorCommand motor_comman
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
     steering_effort_msg.data = deg_to_rad(msg->data);
-    ROS_INFO("steering_effort in rads: %lf", steering_effort_msg.data);
+    //ROS_INFO("steering_effort in rads: %lf", steering_effort_msg.data);
 }
 
 void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
     motor_effort_msg.data = msg->data;
-    ROS_INFO("motor_effort: %lf", motor_effort_msg.data);
+    //ROS_INFO("motor_effort: %lf", motor_effort_msg.data);
 
 }
 
@@ -125,7 +125,7 @@ void OtoController::publish_steering_setpoint() {
 
 void OtoController::publish_motor_setpoint() {
     motor_plant_pub.publish(motor_setpoint_msg);
-    ROS_INFO("motor_setpoint: %lf", motor_setpoint_msg.data);
+    //ROS_INFO("motor_setpoint: %lf", motor_setpoint_msg.data);
 }
 
 void OtoController::steering_pid_enable(bool x) {
