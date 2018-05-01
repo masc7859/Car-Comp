@@ -21,7 +21,7 @@ void OtoController::CruiseState::cruise(){
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();
 
-    //decide_vel();
+    decide_vel();
     decide_yaw();
 }
 
@@ -45,8 +45,10 @@ void OtoController::CruiseState::sensor_interpret(){
     ROS_INFO("actual distance (front): %lf", parent_controller->distance_plant_front);
     ROS_INFO("actual distance (rear): %lf", parent_controller->distance_plant_rear);
 
-    if(parent_controller->steering_plant >= parent_controller->cfg.min_turn_distance){
-        //cant turn immediately, need some way of telling for sure
+    if(parent_controller->distance_plant_front > parent_controller->cfg.min_turn_distance &&
+      parent_controller->distance_plant_rear > parent_controller->cfg.min_turn_distance){
+        bool x = false;
+        parent_controller->steering_pid_enable(x);
         parent_controller->turn_init_yaw = parent_controller->yaw;
         parent_controller->state = TURN;
 	}

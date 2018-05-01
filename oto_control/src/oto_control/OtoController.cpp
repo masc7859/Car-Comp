@@ -26,7 +26,7 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
     distance_plant_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1.8;
 
     //merge sensor data with imu
-    distance_plant_comb = cfg.min_turn_distance - (distance_plant_front - distance_plant_rear);
+    distance_plant_comb = cfg.min_turn_distance - (distance_plant_front + distance_plant_rear)/2.;
 
     filter_ir(distance_plant_comb);
 }
@@ -126,6 +126,11 @@ void OtoController::publish_motor_setpoint() {
     ROS_INFO("motor_setpoint: %lf", motor_setpoint_msg.data);
 }
 
+void OtoController::steering_pid_enable(bool x) {
+    pid_enable_msg.data = x;
+    steering_pid_enable_pub.publish(pid_enable_msg);
+}
+
 bool OtoController::initialize() {
     oto_control::MotorCommand motor_command;
 
@@ -138,6 +143,7 @@ bool OtoController::initialize() {
     steering_plant_pub = n.advertise<std_msgs::Float64>("steering_plant", 1);
     steering_setpoint_pub = n.advertise<std_msgs::Float64>("steering_setpoint", 1);
     steering_effort_sub = n.subscribe("steering_effort", 1, &OtoController::steering_effort_callback, this);
+    steering_pid_enable_pub = n.advertise<std_msgs::Bool>("steering_pid_enable", 1);
 
     motor_plant_pub = n.advertise<std_msgs::Float64>("motor_plant", 1);
     motor_setpoint_pub = n.advertise<std_msgs::Float64>("motor_setpoint", 1);

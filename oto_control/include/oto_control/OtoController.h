@@ -11,6 +11,7 @@
 #include <string>
 #include <std_msgs/Float64.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Bool.h>
 #include <sensor_msgs/Imu.h>
 #include <geometry_msgs/Vector3Stamped.h>
 #include <sensor_msgs/PointCloud.h>
@@ -63,6 +64,7 @@ class OtoController {
         ros::Publisher steering_plant_pub;
         ros::Publisher steering_setpoint_pub;
         ros::Subscriber steering_effort_sub;
+        ros::Publisher steering_pid_enable_pub;
 
         ros::Publisher motor_plant_pub;
         ros::Publisher motor_setpoint_pub;
@@ -131,6 +133,7 @@ class OtoController {
         std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
                           motor_plant_msg, motor_effort_msg, motor_setpoint_msg;
         std_msgs::String debug_msg;
+        std_msgs::Bool pid_enable_msg;
 
         OtoController();
         ~OtoController();
@@ -146,6 +149,7 @@ class OtoController {
         void imu_callback(const ImuMsg::ConstPtr& imu_msg);
         void publish_steering_setpoint();
         void publish_steering_plant();
+        void steering_pid_enable(bool x);
         void publish_motor_setpoint();
         void publish_motor_plant();
         void decide_yaw();
