@@ -15,6 +15,10 @@ OtoController::OtoController() {
 }
 
 OtoController::~OtoController() {
+	oto_control::MotorCommand motor_command;
+	motor_command.joint_name = "drive";
+    motor_command.position = 0;
+    publish_motor_command(motor_command);
     ROS_INFO("Shutting down...");
 }
 
@@ -85,7 +89,7 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
     t_prev = t;
 
     vel_est = vel_est + x_accel * t_interval;
-    ROS_INFO("Vel Estimate: %lf", vel_est);
+    //ROS_INFO("Vel Estimate: %lf", vel_est);
 
 }
 
@@ -175,7 +179,7 @@ bool OtoController::initialize() {
 
     //setup configuration
     cfg.cruise_setpoint = 150.0;
-    cfg.min_turn_distance = 750.0;
+    cfg.min_turn_distance = 800.0;
     filter_ir_count = 0;
     vector<double> ir_count_vec;
 

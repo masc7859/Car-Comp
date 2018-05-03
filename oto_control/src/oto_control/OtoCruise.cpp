@@ -21,7 +21,7 @@ void OtoController::CruiseState::cruise(){
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();
 
-    //decide_vel();
+    decide_vel();
     decide_yaw();
 }
 
@@ -36,7 +36,7 @@ void OtoController::CruiseState::decide_yaw(){ //bad name, change
 void OtoController::CruiseState::decide_vel(){
     //set motor_setpoint based on confidence
     motor_command.joint_name = "drive";
-    motor_command.position = MAX_SPEED_PW_F * 0.30;
+    motor_command.position = MAX_SPEED_PW_F * 0.45;
     parent_controller->publish_motor_command(motor_command);
 
 }
@@ -49,6 +49,7 @@ void OtoController::CruiseState::sensor_interpret(){
     //debug_pub.publish("actual distance (front): %lf", parent_controller->distance_plant_front);
     //debug_pub.publish("actual distance (rear): %lf", parent_controller->distance_plant_rear);
 
+	/*
     if(parent_controller->distance_plant_front > parent_controller->cfg.min_turn_distance &&
       parent_controller->distance_plant_rear > parent_controller->cfg.min_turn_distance){
         bool x = false;
@@ -56,6 +57,7 @@ void OtoController::CruiseState::sensor_interpret(){
         parent_controller->turn_init_yaw = parent_controller->yaw;
         parent_controller->state = TURN;
 	}
+	*/
 
 }
 
