@@ -66,13 +66,13 @@ int main(int argc,char**argv)
     usleep(1000*1000);
 
 	 while(ros::ok()) {
-     /*
+     
 	  	nonblock(1);
       if (keyState(32)) { //32 in ASCII table correspond to Space Bar
         nonblock(0);
         break;
       }
-      */
+      
 	    switch(controller.state){
         case 0:
           	controller.cruiser.cruise();

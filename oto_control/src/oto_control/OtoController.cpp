@@ -24,14 +24,24 @@ OtoController::~OtoController() {
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
     double distance_plant_comb;
+	double distance_front;
+	double distance_rear;
+
+	distance_front = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+	distance_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1;
 
     if(yaw_found){
-      distance_plant_front = (pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18)*cos(yaw_zero - yaw);
-      distance_plant_rear = (pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1)*cos(yaw_zero - yaw);
+	  if(abs(distance_front - distance_rear) < 3.0){
+	    yaw_zero = yaw;
+	  }
+	  ROS_INFO("yaw_zero: %lf", yaw_zero);
+	  ROS_INFO("yaw_cur: %lf", yaw);
+      distance_plant_front = distance_front*cos(yaw_zero - yaw);
+      distance_plant_rear = distance_rear*cos(yaw_zero - yaw);
     }
     else{
-      distance_plant_front = (pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18);
-      distance_plant_rear = (pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1);
+      distance_plant_front = distance_front;
+      distance_plant_rear = distance_rear;
     }
 
     //merge sensor data with imu
