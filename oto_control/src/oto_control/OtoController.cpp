@@ -25,9 +25,14 @@ OtoController::~OtoController() {
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
     double distance_plant_comb;
 
-
-    distance_plant_front = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
-    distance_plant_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+    if(yaw_found){
+      distance_plant_front = (pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18)*cos(yaw_zero - yaw);
+      distance_plant_rear = (pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1)*cos(yaw_zero - yaw);
+    }
+    else{
+      distance_plant_front = (pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18);
+      distance_plant_rear = (pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1);
+    }
 
     //merge sensor data with imu
     distance_plant_comb = (distance_plant_front + distance_plant_rear)/2.;
@@ -47,7 +52,7 @@ void OtoController::filter_ir(double distance_plant_comb) {
       steering_plant_msg.data = steering_plant;
       if(!isnan(steering_plant_msg.data)){
       	steering_plant_pub.publish(steering_plant_msg);
-      	ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
+      	//ROS_INFO("Publishing steering plant of: %lf", steering_plant_msg.data);
       }
       ir_count_vec.clear();
       ir_count_vec.push_back(distance_plant_comb);
@@ -81,15 +86,27 @@ void OtoController::imu_callback(const ImuMsg::ConstPtr& imu_msg) {
     y_accel = imu_msg->linear_acceleration.y;
 
     tf2::Matrix3x3(tf2::Quaternion(q1,q2,q3,q0)).getRPY(roll, pitch, yaw);
+    if(yaw < 0){
+      yaw = -yaw;
+    }
+    else{
+      yaw = M_PI + abs(M_PI-yaw);
+    }
+    if(!yaw_found){
+      yaw_zero = yaw;
+      yaw_found = true;
+    }
     //ROS_INFO("yaw: %lf", yaw);
-    //ROS_INFO("forward/reverse accel: %lf", y_accel);
+    //ROS_INFO("forward/reverse accel: %lf", x_accel);
 
+    /*
     t = ros::Time::now().toSec();
     t_interval = t - t_prev;
     t_prev = t;
-
     vel_est = vel_est + x_accel * t_interval;
-    //ROS_INFO("Vel Estimate: %lf", vel_est);
+    ROS_INFO("time: %lf",t_interval );
+    ROS_INFO("Vel Estimate: %lf", vel_est);
+    */
 
 }
 
@@ -187,6 +204,8 @@ bool OtoController::initialize() {
     turner.initialize(this);
 
     state = CRUISE;
+    doorways = 0;
+    yaw_found = false;
     t_prev = ros::Time::now().toSec();
 
     bool success = true;

@@ -15,9 +15,9 @@ OtoController::CruiseState::CruiseState()
 }
 
 void OtoController::CruiseState::cruise(){
-    parent_controller->debug_msg.data = "in Cruise";
-    parent_controller->debug_pub.publish(parent_controller->debug_msg);
-    sensor_interpret();
+    double cur_distance_plant = parent_controller->steering_plant_msg.data;
+
+    sensor_interpret(cur_distance_plant);
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();
 
@@ -41,29 +41,43 @@ void OtoController::CruiseState::decide_vel(){
 
 }
 
-void OtoController::CruiseState::sensor_interpret(){
+void OtoController::CruiseState::sensor_interpret(double cur_distance_plant){
+    /*
     parent_controller->debug_msg.data = "actual distance (front): " + to_string(parent_controller->distance_plant_front);
     parent_controller->debug_pub.publish(parent_controller->debug_msg);
     parent_controller->debug_msg.data = "actual distance (rear): " + to_string(parent_controller->distance_plant_rear);
     parent_controller->debug_pub.publish(parent_controller->debug_msg);
-    //debug_pub.publish("actual distance (front): %lf", parent_controller->distance_plant_front);
-    //debug_pub.publish("actual distance (rear): %lf", parent_controller->distance_plant_rear);
+    */
 
-	/*
-    if(parent_controller->distance_plant_front > parent_controller->cfg.min_turn_distance &&
-      parent_controller->distance_plant_rear > parent_controller->cfg.min_turn_distance){
-        bool x = false;
-        parent_controller->steering_pid_enable(x);
-        parent_controller->turn_init_yaw = parent_controller->yaw;
-        parent_controller->state = TURN;
-	}
-	*/
-
+    /*
+      if(cur_distance_plant > parent_controller->cfg.min_turn_distance){
+          bool x = false;
+          parent_controller->steering_pid_enable(x);
+          parent_controller->turn_init_yaw = parent_controller->yaw;
+          parent_controller->state = TURN;
+  	}
+  	*/
+    ROS_INFO("change in distance: %lf", abs(cur_distance_plant - last_distance_plant));
+    if (abs(cur_distance_plant - last_distance_plant) > 50.0){
+      if (in_doorway = false) {
+        in_doorway = true;
+        parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint + 90.0;
+      }
+      else{
+        parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint - 90.0;
+        in_doorway = false;
+        parent_controller->doorways++;
+        ROS_INFO("exited doorway: %d",parent_controller->doorways);
+      }
+    }
+    last_distance_plant = cur_distance_plant;
 }
 
 bool OtoController::CruiseState::initialize(OtoController* controller){
     parent_controller = controller;
     turn_flag = false;
+    last_distance_plant = parent_controller->steering_plant_msg.data;
+    in_doorway = true;
 
     bool success = true;
     ROS_INFO("Initialized Cruise State");

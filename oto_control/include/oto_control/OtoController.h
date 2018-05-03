@@ -87,6 +87,9 @@ class OtoController {
               double steering_plant, motor_plant;
               bool turn_flag;
               double turn_flag_confidence;
+              double last_distance_plant;
+              bool in_doorway;
+
               OtoController* parent_controller;
               oto_control::MotorCommand motor_command;
 
@@ -95,7 +98,7 @@ class OtoController {
               bool initialize(OtoController* parent_controller);
               void decide_yaw();
               void decide_vel();
-              void sensor_interpret();
+              void sensor_interpret(double cur_distance_plant);
               void cruise();
         } cruiser;
 
@@ -128,6 +131,9 @@ class OtoController {
         float t_prev;
         double distance_plant_front, distance_plant_rear, steering_plant;
         int filter_ir_count;
+        int doorways;
+        float yaw_zero;
+        bool yaw_found;
         vector<double> ir_count_vec;
 
         std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
