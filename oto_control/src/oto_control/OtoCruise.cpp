@@ -58,18 +58,21 @@ void OtoController::CruiseState::sensor_interpret(double cur_distance_plant){
   	}
   	*/
     ROS_INFO("change in distance: %lf", abs(cur_distance_plant - last_distance_plant));
-    if (abs(cur_distance_plant - last_distance_plant) > 50.0){
-      if (in_doorway = false) {
+    if ((cur_distance_plant - last_distance_plant) > 70.0){
+      if (!in_doorway){
         in_doorway = true;
-        parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint + 90.0;
+        parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint + 70.0;
       }
-      else{
-        parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint - 90.0;
+    }
+	else if((cur_distance_plant - last_distance_plant) < -70.0){
+	  if(in_doorway){
+		parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint - 70.0;
         in_doorway = false;
         parent_controller->doorways++;
         ROS_INFO("exited doorway: %d",parent_controller->doorways);
-      }
-    }
+	    }
+	}
+
     last_distance_plant = cur_distance_plant;
 }
 

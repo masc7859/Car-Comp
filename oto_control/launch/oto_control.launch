@@ -63,18 +63,17 @@
         <param name="pid_enable_topic" value="steering_pid_enable" />
     </node>
 
-<!--
+
     <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot"
       args="/steering_effort/data /steering_plant/data /steering_setpoint/data" />
 
     <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
--->
 
     <!-- motor pid -->
     <node name="speed" pkg="pid" type="controller" output="screen" >
-        <param name="Kp" value="1.0" />
+        <param name="Kp" value="1.5" />
         <param name="Ki" value="0.0" />
-        <param name="Kd" value="0.1" />
+        <param name="Kd" value="0.0" />
         <param name="upper_limit" value="10" />
         <param name="lower_limit" value="-10" />
         <param name="windup_limit" value="10" />
