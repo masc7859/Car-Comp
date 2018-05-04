@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/devel/setup.sh
+    local-name: /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/devel/setup.sh

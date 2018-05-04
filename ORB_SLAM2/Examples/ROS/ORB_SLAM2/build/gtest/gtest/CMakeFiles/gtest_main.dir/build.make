@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2
+CMAKE_SOURCE_DIR = /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build
+CMAKE_BINARY_DIR = /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build
 
 # Include any dependencies generated for this target.
 include gtest/gtest/CMakeFiles/gtest_main.dir/depend.make
@@ -59,16 +59,16 @@ include gtest/gtest/CMakeFiles/gtest_main.dir/flags.make
 
 gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o: gtest/gtest/CMakeFiles/gtest_main.dir/flags.make
 gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o: /usr/src/gtest/src/gtest_main.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
-	cd /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /usr/src/gtest/src/gtest_main.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+	cd /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /usr/src/gtest/src/gtest_main.cc
 
 gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gtest_main.dir/src/gtest_main.cc.i"
-	cd /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /usr/src/gtest/src/gtest_main.cc > CMakeFiles/gtest_main.dir/src/gtest_main.cc.i
+	cd /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /usr/src/gtest/src/gtest_main.cc > CMakeFiles/gtest_main.dir/src/gtest_main.cc.i
 
 gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gtest_main.dir/src/gtest_main.cc.s"
-	cd /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /usr/src/gtest/src/gtest_main.cc -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.s
+	cd /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /usr/src/gtest/src/gtest_main.cc -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.s
 
 gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o.requires:
 
@@ -88,15 +88,15 @@ gtest_main_OBJECTS = \
 # External object files for target gtest_main
 gtest_main_EXTERNAL_OBJECTS =
 
-/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o
-/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: gtest/gtest/CMakeFiles/gtest_main.dir/build.make
-/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest.so
-/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: gtest/gtest/CMakeFiles/gtest_main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so"
-	cd /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gtest_main.dir/link.txt --verbose=$(VERBOSE)
+/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: gtest/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o
+/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: gtest/gtest/CMakeFiles/gtest_main.dir/build.make
+/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest.so
+/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so: gtest/gtest/CMakeFiles/gtest_main.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so"
+	cd /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gtest_main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-gtest/gtest/CMakeFiles/gtest_main.dir/build: /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so
+gtest/gtest/CMakeFiles/gtest_main.dir/build: /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgtest_main.so
 
 .PHONY : gtest/gtest/CMakeFiles/gtest_main.dir/build
 
@@ -105,10 +105,10 @@ gtest/gtest/CMakeFiles/gtest_main.dir/requires: gtest/gtest/CMakeFiles/gtest_mai
 .PHONY : gtest/gtest/CMakeFiles/gtest_main.dir/requires
 
 gtest/gtest/CMakeFiles/gtest_main.dir/clean:
-	cd /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && $(CMAKE_COMMAND) -P CMakeFiles/gtest_main.dir/cmake_clean.cmake
+	cd /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest && $(CMAKE_COMMAND) -P CMakeFiles/gtest_main.dir/cmake_clean.cmake
 .PHONY : gtest/gtest/CMakeFiles/gtest_main.dir/clean
 
 gtest/gtest/CMakeFiles/gtest_main.dir/depend:
-	cd /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 /usr/src/gtest /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest/CMakeFiles/gtest_main.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 /usr/src/gtest /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/gtest/gtest/CMakeFiles/gtest_main.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : gtest/gtest/CMakeFiles/gtest_main.dir/depend
 

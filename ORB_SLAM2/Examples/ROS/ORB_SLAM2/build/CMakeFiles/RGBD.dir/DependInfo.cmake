@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/ros_rgbd.cc" "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/RGBD.dir/src/ros_rgbd.cc.o"
+  "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/ros_rgbd.cc" "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/RGBD.dir/src/ros_rgbd.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -23,8 +23,9 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../"
   "../../../.."
   "../../../../include"
-  "/usr/local/lib/cmake/Pangolin/../../../include"
-  "/usr/local/include/eigen3"
+  "/home/odroid/Workspace/Pangolin/include"
+  "/home/odroid/Workspace/Pangolin/build/src/include"
+  "/usr/include/eigen3"
   )
 
 # Targets to which this target links.

@@ -7,6 +7,6 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/devel:$CMAKE_PREFIX_PATH"
-export ROSLISP_PACKAGE_DIRECTORIES="/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/devel/share/common-lisp"
-export ROS_PACKAGE_PATH="/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2:/opt/ros/kinetic/share"
+export CMAKE_PREFIX_PATH="/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/devel:$CMAKE_PREFIX_PATH"
+export ROSLISP_PACKAGE_DIRECTORIES="/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/devel/share/common-lisp"
+export ROS_PACKAGE_PATH="/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2:/opt/ros/kinetic/share"

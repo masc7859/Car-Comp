@@ -6,5 +6,5 @@ CXX_FLAGS =  -Wall  -O3 -march=native -std=c++11 -O3 -DNDEBUG   -W -Wall -Wno-un
 
 CXX_DEFINES = -DCOMPILEDWITHC11 -DROS_PACKAGE_NAME=\"ORB_SLAM2\"
 
-CXX_INCLUDES = -I/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/include -I/opt/ros/kinetic/include -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv -I/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 -I/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/../../.. -I/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/../../../include -I/usr/local/lib/cmake/Pangolin/../../../include -I/usr/local/include/eigen3 
+CXX_INCLUDES = -I/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/include -I/opt/ros/kinetic/include -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv -I/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 -I/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/../../.. -I/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/../../../include -I/home/odroid/Workspace/Pangolin/include -I/home/odroid/Workspace/Pangolin/build/src/include -I/usr/include/eigen3 
 

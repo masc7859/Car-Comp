@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2
+CMAKE_SOURCE_DIR = /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build
+CMAKE_BINARY_DIR = /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/MonoAR.dir/depend.make
@@ -116,16 +116,16 @@ CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o: /opt/ros/kinetic/share/pluginlib/
 CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o: /opt/ros/kinetic/share/image_transport/package.xml
 CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o: /opt/ros/kinetic/share/opencv3/package.xml
 CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o: /opt/ros/kinetic/share/cv_bridge/package.xml
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o -c /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o -c /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc
 
 CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc > CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc > CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.i
 
 CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc -o CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc -o CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.s
 
 CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o.requires:
 
@@ -197,16 +197,16 @@ CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o: /opt/ros/kinetic/share/pluginlib/pac
 CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o: /opt/ros/kinetic/share/image_transport/package.xml
 CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o: /opt/ros/kinetic/share/opencv3/package.xml
 CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o: /opt/ros/kinetic/share/cv_bridge/package.xml
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o -c /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o -c /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc
 
 CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc > CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc > CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.i
 
 CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc -o CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc -o CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.s
 
 CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o.requires:
 
@@ -230,76 +230,76 @@ MonoAR_EXTERNAL_OBJECTS =
 ../MonoAR: CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o
 ../MonoAR: CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o
 ../MonoAR: CMakeFiles/MonoAR.dir/build.make
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_stitching3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_superres3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_videostab3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_aruco3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_bgsegm3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_bioinspired3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_ccalib3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_cvv3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_dpm3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_face3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_fuzzy3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_hdf3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_img_hash3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_line_descriptor3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_optflow3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_reg3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_rgbd3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_saliency3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_stereo3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_structured_light3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_surface_matching3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_tracking3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_xfeatures2d3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_ximgproc3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_xobjdetect3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_xphoto3.so.3.3.1
-../MonoAR: /usr/local/lib/libpangolin.so
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_stitching3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_superres3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_videostab3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_aruco3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_bgsegm3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_bioinspired3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_ccalib3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_cvv3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_dpm3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_face3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_fuzzy3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_hdf3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_img_hash3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_line_descriptor3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_optflow3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_reg3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_rgbd3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_saliency3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_stereo3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_structured_light3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_surface_matching3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_tracking3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_xfeatures2d3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_ximgproc3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_xobjdetect3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_xphoto3.so.3.3.1
+../MonoAR: /home/odroid/Workspace/Pangolin/build/src/libpangolin.so
 ../MonoAR: ../../../../Thirdparty/DBoW2/lib/libDBoW2.so
 ../MonoAR: ../../../../Thirdparty/g2o/lib/libg2o.so
 ../MonoAR: ../../../../lib/libORB_SLAM2.so
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_shape3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_photo3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_datasets3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_plot3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_text3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_dnn3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_ml3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_video3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_calib3d3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_features2d3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_highgui3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_videoio3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_viz3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_phase_unwrapping3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_flann3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgcodecs3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_objdetect3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgproc3.so.3.3.1
-../MonoAR: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_core3.so.3.3.1
-../MonoAR: /usr/lib/x86_64-linux-gnu/libGLU.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libGL.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libGLEW.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libSM.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libICE.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libX11.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libXext.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libdc1394.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libavcodec.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libavformat.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libavutil.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libswscale.so
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_shape3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_photo3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_datasets3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_plot3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_text3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_dnn3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_ml3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_video3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_calib3d3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_features2d3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_highgui3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_videoio3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_viz3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_phase_unwrapping3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_flann3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_imgcodecs3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_objdetect3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_imgproc3.so.3.3.1
+../MonoAR: /opt/ros/kinetic/lib/arm-linux-gnueabihf/libopencv_core3.so.3.3.1
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libGLU.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libGL.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libGLEW.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libSM.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libICE.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libX11.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libXext.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libdc1394.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libavcodec.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libavformat.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libavutil.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libswscale.so
 ../MonoAR: /usr/lib/libOpenNI.so
-../MonoAR: /usr/local/lib/libuvc.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libpng.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libz.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libjpeg.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libtiff.so
-../MonoAR: /usr/lib/x86_64-linux-gnu/libIlmImf.so
+../MonoAR: /usr/local/lib/arm-linux-gnueabihf/libuvc.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libpng.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libz.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libjpeg.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libtiff.so
+../MonoAR: /usr/lib/arm-linux-gnueabihf/libIlmImf.so
 ../MonoAR: CMakeFiles/MonoAR.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../MonoAR"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../MonoAR"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MonoAR.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -317,6 +317,6 @@ CMakeFiles/MonoAR.dir/clean:
 .PHONY : CMakeFiles/MonoAR.dir/clean
 
 CMakeFiles/MonoAR.dir/depend:
-	cd /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build /home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2 /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build /home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/MonoAR.dir/depend
 

@@ -24,18 +24,20 @@ OtoController::~OtoController() {
 
 void OtoController::sensor_state_callback(const oto_control::SensorStateList::ConstPtr& msg) {
     double distance_plant_comb;
-	double distance_front;
-	double distance_rear;
+	double distance_front;//right
+	double distance_rear;//left
 
-	distance_front = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
-	distance_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18 - 1;
+	distance_plant_front = pow(msg->sensor_states[FRONT_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
+	distance_plant_rear = pow(msg->sensor_states[REAR_IR].voltage, -3.348) * 7.817 * pow(10.0,10.0) + 34.18;
 
+	/*
     if(yaw_found){
-	  if(abs(distance_front - distance_rear) < 3.0){
+	  if(abs(distance_front - distance_rear) < 4.0){
 	    yaw_zero = yaw;
+		ROS_INFO("yaw: %lf", yaw_zero);
 	  }
-	  //ROS_INFO("yaw_zero: %lf", yaw_zero);
-	  //ROS_INFO("yaw_cur: %lf", yaw);
+	  ROS_INFO("yaw_zero: %lf", yaw_zero);
+	  ROS_INFO("yaw_cur: %lf", yaw);
       distance_plant_front = distance_front*cos(yaw_zero - yaw);
       distance_plant_rear = distance_rear*cos(yaw_zero - yaw);
     }
@@ -43,11 +45,13 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
       distance_plant_front = distance_front;
       distance_plant_rear = distance_rear;
     }
+	*/
 
     //merge sensor data with imu
-    distance_plant_comb = (distance_plant_front + distance_plant_rear)/2.;
+    distance_plant_comb = distance_plant_rear - distance_plant_front;
     debug_msg.data = "distance_away from cruising:" + to_string(distance_plant_comb);
     debug_pub.publish(debug_msg);
+	ROS_INFO("distance: %lf", distance_plant_comb);
 
     filter_ir(distance_plant_comb);
 }
@@ -140,7 +144,7 @@ void OtoController::publish_motor_command(oto_control::MotorCommand motor_comman
 
 void OtoController::steering_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
     steering_effort_msg.data = deg_to_rad(msg->data);
-    ROS_INFO("steering_effort in rads: %lf", steering_effort_msg.data);
+    //ROS_INFO("steering_effort in rads: %lf", steering_effort_msg.data);
 }
 
 void OtoController::motor_effort_callback(const std_msgs::Float64::ConstPtr& msg) {
@@ -204,7 +208,7 @@ bool OtoController::initialize() {
     //this->publish_motor_command(motor_command);
 
     //setup configuration
-    cfg.cruise_setpoint = 185.0;
+    cfg.cruise_setpoint = 0;
     cfg.min_turn_distance = 800.0;
     filter_ir_count = 0;
     vector<double> ir_count_vec;

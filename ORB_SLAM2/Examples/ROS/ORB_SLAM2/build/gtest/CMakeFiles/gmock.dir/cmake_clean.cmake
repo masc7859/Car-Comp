@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/gmock.dir/usr/src/gtest/src/gtest-all.cc.o"
   "CMakeFiles/gmock.dir/src/gmock-all.cc.o"
-  "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgmock.pdb"
-  "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgmock.so"
+  "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgmock.pdb"
+  "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgmock.so"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/ros_stereo.cc
+/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/ros_stereo.cc
 iostream
 -
 algorithm
@@ -28,7 +28,7 @@ message_filters/sync_policies/approximate_time.h
 opencv2/core/core.hpp
 -
 ../../../include/System.h
-/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/include/System.h
+/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/include/System.h
 
 /opt/ros/kinetic/include/cv_bridge/cv_bridge.h
 sensor_msgs/Image.h

@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc" "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o"
-  "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc" "/home/maxrebo/ros_oto/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o"
+  "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc" "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o"
+  "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc" "/home/odroid/ADVRoboProject/ActiveBuild/src/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -24,8 +24,9 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../"
   "../../../.."
   "../../../../include"
-  "/usr/local/lib/cmake/Pangolin/../../../include"
-  "/usr/local/include/eigen3"
+  "/home/odroid/Workspace/Pangolin/include"
+  "/home/odroid/Workspace/Pangolin/build/src/include"
+  "/usr/include/eigen3"
   )
 
 # Targets to which this target links.

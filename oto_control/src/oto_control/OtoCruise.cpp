@@ -21,22 +21,22 @@ void OtoController::CruiseState::cruise(){
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
     parent_controller->publish_steering_setpoint();
 
-    decide_vel();
+    //decide_vel();
     decide_yaw();
 }
 
 void OtoController::CruiseState::decide_yaw(){ //bad name, change
     motor_command.joint_name = "steering";
     //motor_command.position = deg_to_rad(10.);
-    //motor_command.position = parent_controller->steering_effort_msg.data + deg_to_rad(5.);
-    motor_command.position = parent_controller->steering_effort_msg.data;
+    motor_command.position = parent_controller->steering_effort_msg.data + deg_to_rad(5.);
+    //motor_command.position = parent_controller->steering_effort_msg.data;
     parent_controller->publish_motor_command(motor_command);
 }
 
 void OtoController::CruiseState::decide_vel(){
     //set motor_setpoint based on confidence
     motor_command.joint_name = "drive";
-    motor_command.position = MAX_SPEED_PW_F * 0.59;
+    motor_command.position = MAX_SPEED_PW_F * 0.24;
     parent_controller->publish_motor_command(motor_command);
 
 }
@@ -57,19 +57,19 @@ void OtoController::CruiseState::sensor_interpret(double cur_distance_plant){
           parent_controller->state = TURN;
   	}
   	*/
-    ROS_INFO("change in distance: %lf", abs(cur_distance_plant - last_distance_plant));
+    //ROS_INFO("change in distance: %lf", abs(cur_distance_plant - last_distance_plant));
     if ((cur_distance_plant - last_distance_plant) > 70.0){
       if (!in_doorway){
         in_doorway = true;
-        parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint + 70.0;
+        //parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint + 70.0;
       }
     }
 	else if((cur_distance_plant - last_distance_plant) < -70.0){
 	  if(in_doorway){
-		parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint - 70.0;
+		//parent_controller->cfg.cruise_setpoint = parent_controller->cfg.cruise_setpoint - 70.0;
         in_doorway = false;
         parent_controller->doorways++;
-        ROS_INFO("exited doorway: %d",parent_controller->doorways);
+        //ROS_INFO("exited doorway: %d",parent_controller->doorways);
 	    }
 	}
 
