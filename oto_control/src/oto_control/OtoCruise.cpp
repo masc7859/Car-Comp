@@ -44,7 +44,7 @@ void OtoController::CruiseState::decide_vel(){
 void OtoController::CruiseState::sensor_interpret(double right_distance_plant){
     if(right_distance_plant > parent_controller->cfg.min_turn_distance){
 		motor_command.joint_name = "drive";
-		motor_command.position = MAX_SPEED_PW_R * parent_controller->speed;
+		motor_command.position = 0.0;
     	parent_controller->publish_motor_command(motor_command);
 
         bool x = false;
@@ -52,12 +52,6 @@ void OtoController::CruiseState::sensor_interpret(double right_distance_plant){
     	parent_controller->debug_pub.publish(parent_controller->debug_msg);
         parent_controller->turn_init_yaw = parent_controller->yaw;
         parent_controller->state = TURN;
-
-		usleep(100000);
-		motor_command.joint_name = "drive";
-		motor_command.position = 0.0;
-    	parent_controller->publish_motor_command(motor_command);
-		usleep(100000);
   	}
   
 	/*

@@ -206,7 +206,7 @@ bool OtoController::initialize() {
     //this->publish_motor_command(motor_command);
 
     //setup configuration
-    cfg.cruise_setpoint = 20.0;
+    cfg.cruise_setpoint = 50.0;
     cfg.min_turn_distance = 500.0;
     filter_ir_count = 0;
     vector<double> ir_count_vec;
@@ -227,6 +227,6 @@ bool OtoController::initialize() {
 
 double OtoController::get_rate_hz() {
     //get this from params
-    double rate_hz = 50.0;
+    double rate_hz = 80.0;
     return rate_hz;
 }

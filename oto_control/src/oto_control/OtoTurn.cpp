@@ -32,10 +32,10 @@ void OtoController::TurnState::turn(){
 }
 
 void OtoController::TurnState::sensor_interpret(){
-	if (parent_controller->distance_plant_front > (parent_controller->cfg.min_turn_distance - 100.0)){
+	if (parent_controller->distance_plant_front > (parent_controller->cfg.min_turn_distance)){
 		motor_command.joint_name = "drive";
-		motor_command.position = MAX_SPEED_PW_R * 0.5 * parent_controller->speed;
-    	//motor_command.position = MAX_SPEED_PW_F * 0.5 * parent_controller->speed;
+		//motor_command.position = MAX_SPEED_PW_F * 0.5 * parent_controller->speed;
+    	motor_command.position = 0.0;
     	parent_controller->publish_motor_command(motor_command);
 
 		motor_command.joint_name = "steering";
