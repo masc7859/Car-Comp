@@ -96,6 +96,6 @@
 
     <!-- robot controller node -->
     <node pkg="oto_control" type="oto_control_node" name="oto_control_node" output="screen">
-		<param name="speed" value="0.67" />
+		<param name="speed" value="0.57" />
     </node>
 </launch>
