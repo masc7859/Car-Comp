@@ -42,17 +42,18 @@
 	      <param name="pololu_sensors_yaml" value="$(find ros_pololu_servo)/launch/pololu_sensors.yaml" />
         <param name="port_name" value="/dev/ttyACM0" />
         <param name="baud_rate" value="115200" />
-        <param name="rate_hz" value="50" />
+        <param name="rate_hz" value="80" />
         <param name="daisy_chain" value="false" />
     </node>
 
     <!-- steering pid -->
     <node name="steering" pkg="pid" type="controller" output="screen" >
-        <param name="Kp" value="0.6" />
+        <param name="Kp" value="0.05" />
         <param name="Ki" value="0.0" />
-        <param name="Kd" value="0.00" />
+        <param name="Kd" value="0.025" />
+		<!--1575 speed: kp: .05, kd: .025-->
         <param name="upper_limit" value="35" />
-        <param name="lower_limit" value="-35" />
+        <param name="lower_limit" value="-45" />
         <param name="windup_limit" value="10" />
         <!--<param name="cutoff_frequency" value="20" />-->
         <param name="max_loop_frequency" value="10" />
@@ -95,5 +96,6 @@
 
     <!-- robot controller node -->
     <node pkg="oto_control" type="oto_control_node" name="oto_control_node" output="screen">
+		<param name="speed" value="0.32" />
     </node>
 </launch>

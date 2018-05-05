@@ -48,11 +48,8 @@ void OtoController::sensor_state_callback(const oto_control::SensorStateList::Co
 	*/
 
     //merge sensor data with imu
-    distance_plant_comb = distance_plant_rear - distance_plant_front;
-    debug_msg.data = "distance_away from cruising:" + to_string(distance_plant_comb);
-    debug_pub.publish(debug_msg);
-	ROS_INFO("distance: %lf", distance_plant_comb);
-
+    distance_plant_comb = distance_plant_front - distance_plant_rear;
+	ROS_INFO("distance: %lf", distance_plant_front);
     filter_ir(distance_plant_comb);
 }
 
@@ -169,6 +166,7 @@ void OtoController::steering_pid_enable(bool x) {
 
 bool OtoController::initialize() {
     oto_control::MotorCommand motor_command;
+	ros::NodeHandle np("~");
 
     //pololu
     sensor_sub = n.subscribe("pololu/sensor_states", 1, &OtoController::sensor_state_callback, this);
@@ -208,8 +206,8 @@ bool OtoController::initialize() {
     //this->publish_motor_command(motor_command);
 
     //setup configuration
-    cfg.cruise_setpoint = 0;
-    cfg.min_turn_distance = 800.0;
+    cfg.cruise_setpoint = 20.0;
+    cfg.min_turn_distance = 500.0;
     filter_ir_count = 0;
     vector<double> ir_count_vec;
 
@@ -220,6 +218,7 @@ bool OtoController::initialize() {
     doorways = 0;
     yaw_found = false;
     t_prev = ros::Time::now().toSec();
+	np.getParam("speed", speed);
 
     bool success = true;
     ROS_INFO("Initialized OtoController");

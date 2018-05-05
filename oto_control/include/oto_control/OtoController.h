@@ -98,7 +98,7 @@ class OtoController {
               bool initialize(OtoController* parent_controller);
               void decide_yaw();
               void decide_vel();
-              void sensor_interpret(double cur_distance_plant);
+              void sensor_interpret(double right_distance_plant);
               void cruise();
         } cruiser;
 
@@ -107,7 +107,7 @@ class OtoController {
             public:
               double init_yaw;
               double final_yaw;
-		          double infinity_threshold, parallel_threshold;
+		      double infinity_threshold, parallel_threshold;
               double steering_plant, motor_plant;
               OtoController* parent_controller;
               oto_control::MotorCommand motor_command;
@@ -134,6 +134,7 @@ class OtoController {
         int doorways;
         float yaw_zero;
         bool yaw_found;
+		double speed;
         vector<double> ir_count_vec;
 
         std_msgs::Float64 steering_plant_msg, steering_effort_msg, steering_setpoint_msg,
