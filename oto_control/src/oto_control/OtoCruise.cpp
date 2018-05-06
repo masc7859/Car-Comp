@@ -16,7 +16,7 @@ OtoController::CruiseState::CruiseState()
 }
 
 void OtoController::CruiseState::cruise(){
-    double right_distance_plant = parent_controller->steering_plant_msg.data;
+    double right_distance_plant = parent_controller->distance_plant_front;
 
     sensor_interpret(right_distance_plant);
     parent_controller->steering_setpoint_msg.data = parent_controller->cfg.cruise_setpoint; //will be getting from
@@ -42,14 +42,15 @@ void OtoController::CruiseState::decide_vel(){
 }
 
 void OtoController::CruiseState::sensor_interpret(double right_distance_plant){
+	parent_controller->debug_msg.data = "right distance: " + to_string(right_distance_plant);
+    parent_controller->debug_pub.publish(parent_controller->debug_msg);
+
     if(right_distance_plant > parent_controller->cfg.min_turn_distance){
 		motor_command.joint_name = "drive";
 		motor_command.position = 0.0;
     	parent_controller->publish_motor_command(motor_command);
 
         bool x = false;
-		parent_controller->debug_msg.data = "moving to turn state: " + to_string(right_distance_plant);
-    	parent_controller->debug_pub.publish(parent_controller->debug_msg);
         parent_controller->turn_init_yaw = parent_controller->yaw;
         parent_controller->state = TURN;
   	}
